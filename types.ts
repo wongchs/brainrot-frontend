@@ -10,3 +10,5 @@ export interface PostInterface {
   content: string;
   user: UserInterface;
 }
+
+export type PostFormValue = Omit<PostInterface, "id">;

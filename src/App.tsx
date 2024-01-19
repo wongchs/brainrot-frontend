@@ -3,14 +3,19 @@ import Notification from "./components/Notification";
 import LoginForm from "./components/LoginForm";
 import postService from "./services/postService";
 import loginService from "./services/loginService";
-import { PostInterface, UserInterface } from "../types";
+import { PostFormValue, PostInterface, UserInterface } from "../types";
+import axios from "axios";
+import PostForm from "./components/PostForm";
 
 function App() {
   const [posts, setPosts] = useState<PostInterface[]>([]);
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [user, setUser] = useState<UserInterface | null>(null);
-  const [notification, setNotification] = useState({
+  const [notification, setNotification] = useState<{
+    message: string | null;
+    type: string | null;
+  }>({
     message: null,
     type: null,
   });
@@ -54,6 +59,33 @@ function App() {
     setUser(null);
   };
 
+  const addPost = async (postObject: PostFormValue) => {
+    try {
+      const returnedPost = await postService.create(postObject);
+      returnedPost.user = user;
+      setPosts(posts.concat(returnedPost));
+      setNotification({
+        message: `a new post ${postObject.content} by ${postObject.user.name} added`,
+        type: "success",
+      });
+      setTimeout(() => setNotification({ message: null, type: null }), 5000);
+    } catch (e: unknown) {
+      if (axios.isAxiosError(e)) {
+        if (e?.response?.data && typeof e?.response?.data === "string") {
+          const message = e.response.data.replace(
+            "Something went wrong. Error: ",
+            ""
+          );
+          console.error(message);
+        } else {
+          console.error("Unrecognized axios error");
+        }
+      } else {
+        console.error("Unknown error", e);
+      }
+    }
+  };
+
   if (user === null) {
     return (
       <div>
@@ -78,6 +110,7 @@ function App() {
         <p>
           {user.name} logged in <button onClick={handleLogout}>logout</button>
         </p>
+        <PostForm createPost={addPost} user={user} />
         <ul>
           {posts.map((post) => (
             <li key={post.id}>{post.content}</li>
