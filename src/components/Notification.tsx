@@ -1,4 +1,9 @@
-const Notification = ({ notification, type }) => {
+interface Props {
+  notification: string | null;
+  type: string | null;
+}
+
+const Notification = ({ notification, type }: Props) => {
   const success = {
     color: "green",
     background: "lightgrey",

@@ -1,10 +1,18 @@
+interface Props {
+  handleLogin: (event: React.FormEvent<HTMLFormElement>) => Promise<void>;
+  username: string;
+  password: string;
+  setUsername: React.Dispatch<React.SetStateAction<string>>;
+  setPassword: React.Dispatch<React.SetStateAction<string>>;
+}
+
 const LoginForm = ({
   handleLogin,
   username,
   password,
   setUsername,
   setPassword,
-}) => {
+}: Props) => {
   return (
     <div>
       <form onSubmit={handleLogin}>
