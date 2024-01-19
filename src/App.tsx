@@ -1,11 +1,24 @@
+import { useEffect, useState } from "react";
+import postService from "./services/postService";
+
 function App() {
+  const [posts, setPosts] = useState([]);
+
+  useEffect(() => {
+    postService.getAll().then((posts) => {
+      setPosts(posts);
+    });
+  }, []);
+
+  console.log(posts)
   return (
     <>
       <div>
-        <p>hello</p>
-        <p>hello</p>
-        <p>hello</p>
-        <p>hello</p>
+        <ul>
+          {posts.map((post) => (
+            <li>{post.content}</li>
+          ))}
+        </ul>
       </div>
     </>
   );
