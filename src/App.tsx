@@ -3,12 +3,13 @@ import Notification from "./components/Notification";
 import LoginForm from "./components/LoginForm";
 import postService from "./services/postService";
 import loginService from "./services/loginService";
+import { PostInterface, UserInterface } from "../types";
 
 function App() {
-  const [posts, setPosts] = useState([]);
+  const [posts, setPosts] = useState<PostInterface[]>([]);
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
-  const [user, setUser] = useState(null);
+  const [user, setUser] = useState<UserInterface | null>(null);
   const [notification, setNotification] = useState({
     message: null,
     type: null,
