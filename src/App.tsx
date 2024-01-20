@@ -88,6 +88,35 @@ function App() {
     }
   };
 
+  const updatePost = async (id: string, postObject: PostFormValue) => {
+    try {
+      const returnedPost = await postService.update(id, postObject);
+      returnedPost.user = user;
+      setPosts(
+        posts.map((post) => (post.id !== returnedPost.id ? post : returnedPost))
+      );
+      setNotification({
+        message: `post successfully updated`,
+        type: "success",
+      });
+      setTimeout(() => setNotification({ message: null, type: null }), 5000);
+    } catch (e: unknown) {
+      if (axios.isAxiosError(e)) {
+        if (e?.response?.data && typeof e?.response?.data === "string") {
+          const message = e.response.data.replace(
+            "Something went wrong. Error: ",
+            ""
+          );
+          console.error(message);
+        } else {
+          console.error("Unrecognized axios error");
+        }
+      } else {
+        console.error("Unknown error", e);
+      }
+    }
+  };
+
   const postMatch = useMatch("/:userId/post/:id");
   const matchedPost = postMatch
     ? posts.find((post) => post.id === postMatch.params.id)
@@ -135,7 +164,7 @@ function App() {
           />
           <Route
             path="/:userId/post/:id"
-            element={<Post post={matchedPost} />}
+            element={<Post post={matchedPost} updatePost={updatePost} />}
           />
         </Routes>
       </div>
