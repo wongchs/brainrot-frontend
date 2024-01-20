@@ -8,6 +8,8 @@ import axios from "axios";
 import PostForm from "./components/PostForm";
 import { Link, Route, Routes, useMatch, useNavigate } from "react-router-dom";
 import Post from "./components/Post";
+import "./index.css";
+import { Button } from "./components/ui/button";
 
 function App() {
   const [posts, setPosts] = useState<PostInterface[]>([]);
@@ -153,7 +155,7 @@ function App() {
     <>
       <div>
         <p>
-          {user.name} logged in <button onClick={handleLogout}>logout</button>
+          {user.name} logged in <Button onClick={handleLogout}>logout</Button>
         </p>
         <PostForm createPost={addPost} user={user} />
         <Routes>
