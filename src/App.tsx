@@ -123,11 +123,9 @@ function App() {
   };
 
   const deletePost = async (id: string) => {
-    if (window.confirm("delete post")) {
-      await postService.deleteObject(id);
-      setPosts(posts.filter((post) => post.id !== id));
-      navigate("/");
-    }
+    await postService.deleteObject(id);
+    setPosts(posts.filter((post) => post.id !== id));
+    navigate("/");
   };
 
   const postMatch = useMatch("/:userId/post/:id");
