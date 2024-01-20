@@ -33,9 +33,7 @@ const Post = ({ post, updatePost, deletePost }: Props) => {
   };
 
   const handleDelete = async () => {
-    if (window.confirm(`Delete ${post.content}?`)) {
-      await deletePost(post.id);
-    }
+    await deletePost(post.id);
   };
 
   return (

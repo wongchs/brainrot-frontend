@@ -6,7 +6,7 @@ import loginService from "./services/loginService";
 import { PostFormValue, PostInterface, UserInterface } from "../types";
 import axios from "axios";
 import PostForm from "./components/PostForm";
-import { Link, Route, Routes, useMatch } from "react-router-dom";
+import { Link, Route, Routes, useMatch, useNavigate } from "react-router-dom";
 import Post from "./components/Post";
 
 function App() {
@@ -21,6 +21,7 @@ function App() {
     message: null,
     type: null,
   });
+  const navigate = useNavigate();
 
   useEffect(() => {
     postService.getAll().then((posts) => {
@@ -119,11 +120,9 @@ function App() {
 
   const deletePost = async (id: string) => {
     if (window.confirm("delete post")) {
-      const returnedPost = await postService.deleteObject(id);
-      returnedPost.user = user;
-      setPosts(
-        posts.map((post) => (post.id !== returnedPost.id ? post : returnedPost))
-      );
+      await postService.deleteObject(id);
+      setPosts(posts.filter((post) => post.id !== id));
+      navigate("/");
     }
   };
 
