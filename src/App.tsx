@@ -10,6 +10,8 @@ import { Link, Route, Routes, useMatch, useNavigate } from "react-router-dom";
 import Post from "./components/Post";
 import "./index.css";
 import { Button } from "./components/ui/button";
+import { ThemeProvider } from "./components/theme-provider";
+import { ModeToggle } from "./components/mode-toggle";
 
 function App() {
   const [posts, setPosts] = useState<PostInterface[]>([]);
@@ -135,24 +137,28 @@ function App() {
 
   if (user === null) {
     return (
-      <div>
-        <Notification
-          notification={notification.message}
-          type={notification.type}
-        />
-        <LoginForm
-          handleLogin={handleLogin}
-          username={username}
-          password={password}
-          setUsername={setUsername}
-          setPassword={setPassword}
-        />
-      </div>
+      <ThemeProvider defaultTheme="dark" storageKey="vite-ui-theme">
+        <ModeToggle />
+        <div>
+          <Notification
+            notification={notification.message}
+            type={notification.type}
+          />
+          <LoginForm
+            handleLogin={handleLogin}
+            username={username}
+            password={password}
+            setUsername={setUsername}
+            setPassword={setPassword}
+          />
+        </div>
+      </ThemeProvider>
     );
   }
 
   return (
-    <>
+    <ThemeProvider defaultTheme="dark" storageKey="vite-ui-theme">
+      <ModeToggle />
       <div>
         <p>
           {user.name} logged in <Button onClick={handleLogout}>logout</Button>
@@ -185,7 +191,7 @@ function App() {
           />
         </Routes>
       </div>
-    </>
+    </ThemeProvider>
   );
 }
 
