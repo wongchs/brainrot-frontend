@@ -6,6 +6,8 @@ import loginService from "./services/loginService";
 import { PostFormValue, PostInterface, UserInterface } from "../types";
 import axios from "axios";
 import PostForm from "./components/PostForm";
+import { Link, Route, Routes, useMatch } from "react-router-dom";
+import Post from "./components/Post";
 
 function App() {
   const [posts, setPosts] = useState<PostInterface[]>([]);
@@ -86,6 +88,11 @@ function App() {
     }
   };
 
+  const postMatch = useMatch("/:userId/post/:id");
+  const matchedPost = postMatch
+    ? posts.find((post) => post.id === postMatch.params.id)
+    : null;
+
   if (user === null) {
     return (
       <div>
@@ -111,11 +118,26 @@ function App() {
           {user.name} logged in <button onClick={handleLogout}>logout</button>
         </p>
         <PostForm createPost={addPost} user={user} />
-        <ul>
-          {posts.map((post) => (
-            <li key={post.id}>{post.content}</li>
-          ))}
-        </ul>
+        <Routes>
+          <Route
+            path="/"
+            element={
+              <ul>
+                {posts.map((post) => (
+                  <li key={post.id}>
+                    <Link to={`/${post.user.username}/post/${post.id}`}>
+                      {post.content}
+                    </Link>
+                  </li>
+                ))}
+              </ul>
+            }
+          />
+          <Route
+            path="/:userId/post/:id"
+            element={<Post post={matchedPost} />}
+          />
+        </Routes>
       </div>
     </>
   );
