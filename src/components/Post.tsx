@@ -14,9 +14,10 @@ interface Props {
     id: PostInterface["id"],
     newObject: PostFormValue
   ) => Promise<void>;
+  deletePost: (id: PostInterface["id"]) => Promise<void>;
 }
 
-const Post = ({ post, updatePost }: Props) => {
+const Post = ({ post, updatePost, deletePost }: Props) => {
   const [newContent, setNewContent] = useState("");
 
   if (!post) {
@@ -31,6 +32,12 @@ const Post = ({ post, updatePost }: Props) => {
     await updatePost(post.id, updatedPost);
   };
 
+  const handleDelete = async () => {
+    if (window.confirm(`Delete ${post.content}?`)) {
+      await deletePost(post.id);
+    }
+  };
+
   return (
     <div>
       <h2>{post.content}</h2>
@@ -42,6 +49,7 @@ const Post = ({ post, updatePost }: Props) => {
         onChange={(e) => setNewContent(e.target.value)}
       />
       <button onClick={handleUpdate}>Update Post</button>
+      <button onClick={handleDelete}>Delete Post</button>
     </div>
   );
 };

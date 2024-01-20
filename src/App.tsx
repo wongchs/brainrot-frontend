@@ -117,6 +117,16 @@ function App() {
     }
   };
 
+  const deletePost = async (id: string) => {
+    if (window.confirm("delete post")) {
+      const returnedPost = await postService.deleteObject(id);
+      returnedPost.user = user;
+      setPosts(
+        posts.map((post) => (post.id !== returnedPost.id ? post : returnedPost))
+      );
+    }
+  };
+
   const postMatch = useMatch("/:userId/post/:id");
   const matchedPost = postMatch
     ? posts.find((post) => post.id === postMatch.params.id)
@@ -164,7 +174,13 @@ function App() {
           />
           <Route
             path="/:userId/post/:id"
-            element={<Post post={matchedPost} updatePost={updatePost} />}
+            element={
+              <Post
+                post={matchedPost}
+                updatePost={updatePost}
+                deletePost={deletePost}
+              />
+            }
           />
         </Routes>
       </div>
