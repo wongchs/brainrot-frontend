@@ -11,7 +11,7 @@ import Post from "./components/Post";
 import "./index.css";
 import { Button } from "./components/ui/button";
 import { ThemeProvider } from "./components/theme-provider";
-import { ModeToggle } from "./components/mode-toggle";
+import Sidebar from "./components/Sidebar";
 
 function App() {
   const [posts, setPosts] = useState<PostInterface[]>([]);
@@ -136,7 +136,6 @@ function App() {
   if (user === null) {
     return (
       <ThemeProvider defaultTheme="dark" storageKey="vite-ui-theme">
-        <ModeToggle />
         <div>
           <Notification
             notification={notification.message}
@@ -156,38 +155,40 @@ function App() {
 
   return (
     <ThemeProvider defaultTheme="dark" storageKey="vite-ui-theme">
-      <ModeToggle />
-      <div>
-        <p>
-          {user.name} logged in <Button onClick={handleLogout}>logout</Button>
-        </p>
-        <PostForm createPost={addPost} user={user} />
-        <Routes>
-          <Route
-            path="/"
-            element={
-              <ul>
-                {posts.map((post) => (
-                  <li key={post.id}>
-                    <Link to={`/${post.user.username}/post/${post.id}`}>
-                      {post.content}
-                    </Link>
-                  </li>
-                ))}
-              </ul>
-            }
-          />
-          <Route
-            path="/:userId/post/:id"
-            element={
-              <Post
-                post={matchedPost}
-                updatePost={updatePost}
-                deletePost={deletePost}
-              />
-            }
-          />
-        </Routes>
+      <div className="flex">
+        <Sidebar />
+        <div className={"flex-grow ml-52"}>
+          <p>
+            {user.name} logged in <Button onClick={handleLogout}>logout</Button>
+          </p>
+          <PostForm createPost={addPost} user={user} />
+          <Routes>
+            <Route
+              path="/"
+              element={
+                <ul>
+                  {posts.map((post) => (
+                    <li key={post.id}>
+                      <Link to={`/${post.user.username}/post/${post.id}`}>
+                        {post.content}
+                      </Link>
+                    </li>
+                  ))}
+                </ul>
+              }
+            />
+            <Route
+              path="/:userId/post/:id"
+              element={
+                <Post
+                  post={matchedPost}
+                  updatePost={updatePost}
+                  deletePost={deletePost}
+                />
+              }
+            />
+          </Routes>
+        </div>
       </div>
     </ThemeProvider>
   );
