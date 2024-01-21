@@ -3,6 +3,7 @@ export interface UserInterface {
   name: string;
   passwordHash: string;
   posts: PostInterface[];
+  id: string;
 }
 
 export interface PostInterface {

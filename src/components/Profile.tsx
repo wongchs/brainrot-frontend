@@ -1,3 +1,5 @@
+import userService from "@/services/userService";
+import { useEffect, useState } from "react";
 import { UserInterface } from "types";
 
 interface props {
@@ -5,18 +7,28 @@ interface props {
 }
 
 const Profile = ({ user }: props) => {
-  console.log(user);
-  if (!user) {
+  const [userWithPosts, setUserWithPosts] = useState<UserInterface | null>(
+    null
+  );
+
+  useEffect(() => {
+    userService.getById(user.id).then((userData) => {
+      setUserWithPosts(userData);
+    });
+  }, [user.id]);
+
+  console.log(userWithPosts);
+  if (!userWithPosts) {
     return <div>User not found</div>;
   }
 
   return (
     <div>
-      <h2>{user.name}</h2>
-      <p>Username: {user.username}</p>
+      <h2>{userWithPosts.name}</h2>
+      <p>Username: {userWithPosts.username}</p>
       <h3>Posts:</h3>
       <ul>
-        {user.posts.map((post) => (
+        {userWithPosts.posts.map((post) => (
           <li key={post.id}>{post.content}</li>
         ))}
       </ul>
