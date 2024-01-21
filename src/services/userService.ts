@@ -11,4 +11,9 @@ const getById = (id) => {
   return request.then((response) => response.data);
 };
 
-export default { getByUsername, getById };
+const register = async (credentials: any) => {
+  const response = await axios.post(baseUrl, credentials);
+  return response.data;
+};
+
+export default { getByUsername, getById, register };

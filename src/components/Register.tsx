@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import {
   Card,
@@ -11,53 +11,50 @@ import {
 } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import loginService from "@/services/loginService";
 import { UserInterface } from "types";
+import userService from "@/services/userService";
 
 interface props {
   setUser: React.Dispatch<React.SetStateAction<UserInterface | null>>;
 }
 
-const Login = ({ setUser }: props) => {
+const Register = ({ setUser }: props) => {
   const [username, setUsername] = useState("");
+  const [name, setName] = useState("");
   const [password, setPassword] = useState("");
   const [errorMessage, setErrorMessage] = useState("");
   const navigate = useNavigate();
 
-  const handleLogin = async (event: { preventDefault: () => void }) => {
+  const handleRegister = async (event: { preventDefault: () => void }) => {
     event.preventDefault();
 
     try {
-      const user = await loginService.login({
+      const user = await userService.register({
         username,
+        name,
         password,
       });
       window.localStorage.setItem("loggedBlogUser", JSON.stringify(user));
       setUser(user);
       setUsername("");
+      setName("");
       setPassword("");
       navigate("/");
     } catch (exception) {
-      setErrorMessage("Incorrect credentials. Please try again.");
+      setErrorMessage("Registration failed. Please try again.");
       console.error(exception);
     }
-  };
-
-  const handleReset = () => {
-    setUsername("");
-    setPassword("");
-    setErrorMessage("");
   };
 
   return (
     <Card className="w-[350px]">
       <CardHeader>
-        <CardTitle>Login</CardTitle>
+        <CardTitle>Register</CardTitle>
         <CardDescription>
-          Please enter your credentials to login.
+          Please enter your details to create an account.
         </CardDescription>
       </CardHeader>
-      <form onSubmit={handleLogin}>
+      <form onSubmit={handleRegister}>
         <CardContent>
           <div className="grid w-full items-center gap-4">
             <div className="flex flex-col space-y-1.5">
@@ -67,6 +64,15 @@ const Login = ({ setUser }: props) => {
                 value={username}
                 onChange={({ target }) => setUsername(target.value)}
                 placeholder="Enter your username"
+              />
+            </div>
+            <div className="flex flex-col space-y-1.5">
+              <Label htmlFor="name">Name</Label>
+              <Input
+                id="name"
+                value={name}
+                onChange={({ target }) => setName(target.value)}
+                placeholder="Enter your name"
               />
             </div>
             <div className="flex flex-col space-y-1.5">
@@ -85,19 +91,14 @@ const Login = ({ setUser }: props) => {
           </div>
         </CardContent>
         <CardFooter className="flex justify-between">
-          <Button variant="outline" type="reset" onClick={handleReset}>
+          <Button variant="outline" type="reset">
             Reset
           </Button>
-          <Button type="submit">Login</Button>
+          <Button type="submit">Register</Button>
         </CardFooter>
       </form>
-      <Link to={"/register"}>
-        <div className="text-center p-6 pt-0">
-          Don't have an account?<span className="text-blue-500 font-bold"> Register now!</span>
-        </div>
-      </Link>
     </Card>
   );
 };
 
-export default Login;
+export default Register;

@@ -12,6 +12,7 @@ import Sidebar from "./components/Sidebar";
 import Profile from "./components/Profile";
 import Login from "./components/Login";
 import { ModeToggle } from "./components/mode-toggle";
+import Register from "./components/Register";
 
 function App() {
   const [posts, setPosts] = useState<PostInterface[]>([]);
@@ -119,9 +120,9 @@ function App() {
         <div className="flex justify-center items-center min-h-screen">
           <header className="fixed top-0 left-0 right-0 bg-white dark:bg-gray-800 shadow-md p-4 flex justify-between items-center">
             <h1 className="text-xl font-bold">BRAINROT</h1>
-            <div className="flex justify-center items-center gap-1">
-              <ModeToggle />
+            <div className="flex justify-center items-center gap-2">
               Switch Theme
+              <ModeToggle />
             </div>
           </header>
           <Login setUser={setUser} />
@@ -141,6 +142,7 @@ function App() {
           <PostForm createPost={addPost} user={user} />
           <Routes>
             <Route path="/login" element={<Login setUser={setUser} />} />
+            <Route path="/register" element={<Register setUser={setUser} />} />
             <Route
               path="/"
               element={
