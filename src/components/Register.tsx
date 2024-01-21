@@ -13,6 +13,7 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { UserInterface } from "types";
 import userService from "@/services/userService";
+import loginService from "@/services/loginService";
 
 interface props {
   setUser: React.Dispatch<React.SetStateAction<UserInterface | null>>;
@@ -34,8 +35,16 @@ const Register = ({ setUser }: props) => {
         name,
         password,
       });
-      window.localStorage.setItem("loggedBlogUser", JSON.stringify(user));
-      setUser(user);
+
+      const userForLogin = {
+        username: user.username,
+        password: password,
+      };
+
+      const loggedUser = await loginService.login(userForLogin);
+
+      window.localStorage.setItem("loggedBlogUser", JSON.stringify(loggedUser));
+      setUser(loggedUser);
       setUsername("");
       setName("");
       setPassword("");
@@ -99,7 +108,8 @@ const Register = ({ setUser }: props) => {
       </form>
       <Link to={"/login"}>
         <div className="text-center p-6 pt-0">
-          Already have an account?<span className="text-blue-500 font-bold"> Login!</span>
+          Already have an account?
+          <span className="text-blue-500 font-bold"> Login!</span>
         </div>
       </Link>
     </Card>

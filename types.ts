@@ -4,6 +4,7 @@ export interface UserInterface {
   passwordHash: string;
   posts: PostInterface[];
   id: string;
+  token: string;
 }
 
 export interface PostInterface {

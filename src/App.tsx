@@ -41,12 +41,19 @@ function App() {
     } else {
       navigate("/login");
     }
+  }, []);
+
+  useEffect(() => {
+    if (user) {
+      postService.setToken(user.token);
+    }
   }, [user]);
 
   const handleLogout = async (event: { preventDefault: () => void }) => {
     event.preventDefault();
     window.localStorage.removeItem("loggedBlogUser");
     setUser(null);
+    navigate("/login");
   };
 
   const addPost = async (postObject: PostFormValue) => {
