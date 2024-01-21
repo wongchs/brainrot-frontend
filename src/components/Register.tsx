@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import {
   Card,
@@ -47,7 +47,7 @@ const Register = ({ setUser }: props) => {
   };
 
   return (
-    <Card className="w-[350px]">
+    <Card className="w-[350px] dark:bg-gray-800">
       <CardHeader>
         <CardTitle>Register</CardTitle>
         <CardDescription>
@@ -97,6 +97,11 @@ const Register = ({ setUser }: props) => {
           <Button type="submit">Register</Button>
         </CardFooter>
       </form>
+      <Link to={"/login"}>
+        <div className="text-center p-6 pt-0">
+          Already have an account?<span className="text-blue-500 font-bold"> Login!</span>
+        </div>
+      </Link>
     </Card>
   );
 };

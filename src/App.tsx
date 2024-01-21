@@ -120,7 +120,7 @@ function App() {
     return (
       <ThemeProvider defaultTheme="dark" storageKey="vite-ui-theme">
         <div className="flex justify-center items-center min-h-screen">
-          <header className="fixed top-0 left-0 right-0 bg-white dark:bg-gray-800 shadow-md p-4 flex justify-between items-center">
+          <header className="fixed top-0 left-0 right-0 dark:bg-gray-800 shadow-md p-4 flex justify-between items-center">
             <h1 className="text-xl font-bold">BRAINROT</h1>
             <div className="flex justify-center items-center gap-2">
               Switch Theme
