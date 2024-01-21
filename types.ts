@@ -2,7 +2,7 @@ export interface UserInterface {
   username: string;
   name: string;
   passwordHash: string;
-  posts: [];
+  posts: PostInterface[];
 }
 
 export interface PostInterface {

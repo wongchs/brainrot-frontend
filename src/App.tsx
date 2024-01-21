@@ -12,6 +12,7 @@ import "./index.css";
 import { Button } from "./components/ui/button";
 import { ThemeProvider } from "./components/theme-provider";
 import Sidebar from "./components/Sidebar";
+import Profile from "./components/Profile";
 
 function App() {
   const [posts, setPosts] = useState<PostInterface[]>([]);
@@ -156,8 +157,8 @@ function App() {
   return (
     <ThemeProvider defaultTheme="dark" storageKey="vite-ui-theme">
       <div className="flex">
-        <Sidebar />
-        <div className={"flex-grow ml-52"}>
+        <Sidebar user={user} />
+        <div className="flex-grow ml-72 p-8">
           <p>
             {user.name} logged in <Button onClick={handleLogout}>logout</Button>
           </p>
@@ -187,6 +188,7 @@ function App() {
                 />
               }
             />
+            <Route path="/profile/:id" element={<Profile user={user} />} />
           </Routes>
         </div>
       </div>
