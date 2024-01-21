@@ -2,9 +2,9 @@ export interface UserInterface {
   username: string;
   name: string;
   passwordHash: string;
-  posts: PostInterface[];
+  posts?: PostInterface[];
   id: string;
-  token: string;
+  token?: string;
 }
 
 export interface PostInterface {
@@ -14,3 +14,8 @@ export interface PostInterface {
 }
 
 export type PostFormValue = Omit<PostInterface, "id">;
+
+export type UserFormValue = Omit<
+  UserInterface,
+  "id" | "passwordHash"
+> & { password: string };

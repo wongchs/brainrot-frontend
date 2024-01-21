@@ -1,6 +1,11 @@
 import { useEffect, useState } from "react";
 import postService from "./services/postService";
-import { PostFormValue, PostInterface, UserInterface } from "../types";
+import {
+  PostFormValue,
+  PostInterface,
+  UserFormValue,
+  UserInterface,
+} from "../types";
 import axios from "axios";
 import PostForm from "./components/PostForm";
 import { Link, Route, Routes, useMatch, useNavigate } from "react-router-dom";
@@ -13,6 +18,8 @@ import Profile from "./components/Profile";
 import Login from "./components/Login";
 import { ModeToggle } from "./components/mode-toggle";
 import Register from "./components/Register";
+import userService from "./services/userService";
+import EditProfile from "./components/EditProfile";
 
 function App() {
   const [posts, setPosts] = useState<PostInterface[]>([]);
@@ -38,6 +45,7 @@ function App() {
       const user = JSON.parse(loggedUserJSON);
       setUser(user);
       postService.setToken(user.token);
+      userService.setToken(user.token);
     } else {
       navigate("/login");
     }
@@ -118,6 +126,20 @@ function App() {
     navigate("/");
   };
 
+  const updateUser = async (id: string, userObject: UserFormValue) => {
+    try {
+      const returnedUser = await userService.update(id, userObject);
+      setUser(returnedUser);
+      setNotification({
+        message: `User details successfully updated`,
+        type: "success",
+      });
+      setTimeout(() => setNotification({ message: null, type: null }), 5000);
+    } catch (e: unknown) {
+      console.error("Unknown error", e);
+    }
+  };
+
   const postMatch = useMatch("/:userId/post/:id");
   const matchedPost = postMatch
     ? posts.find((post) => post.id === postMatch.params.id)
@@ -180,6 +202,10 @@ function App() {
               }
             />
             <Route path="/profile/:id" element={<Profile user={user} />} />
+            <Route
+              path="/profile/:id/edit"
+              element={<EditProfile user={user} updateUser={updateUser} />}
+            />
           </Routes>
         </div>
       </div>

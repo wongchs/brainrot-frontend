@@ -1,5 +1,6 @@
 import userService from "@/services/userService";
 import { useEffect, useState } from "react";
+import { Link } from "react-router-dom";
 import { UserInterface } from "types";
 
 interface props {
@@ -25,6 +26,7 @@ const Profile = ({ user }: props) => {
   return (
     <div>
       <h2>{userWithPosts.name}</h2>
+      <Link to={`/profile/${user.username}/edit`}>Edit Profile</Link>
       <p>Username: {userWithPosts.username}</p>
       <h3>Posts:</h3>
       <ul>
