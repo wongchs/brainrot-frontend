@@ -1,12 +1,15 @@
 import { Home, Search } from "lucide-react";
 import { ModeToggle } from "./mode-toggle";
+import { Input } from "./ui/input";
 
 function Sidebar() {
   return (
-    <div className="flex fixed top-0 left-0 w-40 flex flex-col h-screen p-3 bg-black shadow duration-300">
+    <div
+      className="flex fixed top-0 left-0 w-40 flex-col h-screen p-3 shadow duration-300"
+    >
       <div className="space-y-3">
         <div className="flex items-center justify-between">
-          <h2 className="text-xl font-bold text-white">BRAINROT</h2>
+          <h2 className="text-xl font-bold">BRAINROT</h2>
         </div>
         <div className="relative">
           <span className="absolute inset-y-0 left-0 flex items-center py-4">
@@ -14,7 +17,7 @@ function Sidebar() {
               <Search />
             </button>
           </span>
-          <input
+          <Input
             type="search"
             name="Search"
             placeholder="Search..."
@@ -26,11 +29,11 @@ function Sidebar() {
             <li className="rounded-sm">
               <div className="flex items-center p-2 space-x-3 rounded-md">
                 <Home />
-                <span className="text-gray-100">Home</span>
+                <span>Home</span>
               </div>
             </li>
             <li className="rounded-sm">
-              <div className="flex items-center p-2 space-x-3 rounded-md">
+              <div className="flex items-center py-2 space-x-3 rounded-md">
                 <ModeToggle />
               </div>
             </li>
