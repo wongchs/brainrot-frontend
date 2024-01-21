@@ -11,7 +11,7 @@ interface props {
 const Sidebar = ({ user }: props) => {
   console.log(user);
   return (
-    <div className="flex fixed top-0 left-0 w-60 flex-col h-screen p-8 shadow duration-100 border-r dark:border-gray-700">
+    <div className="flex fixed top-0 left-0 w-60 flex-col h-screen p-8 dark:bg-gray-800 shadow duration-100 border-r dark:border-gray-700">
       <div className="space-y-3">
         <div className="flex items-center justify-between">
           <h2 className="text-xl font-bold">BRAINROT</h2>
