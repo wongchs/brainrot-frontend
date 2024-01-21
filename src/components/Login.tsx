@@ -12,13 +12,18 @@ import {
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import loginService from "@/services/loginService";
+import { UserInterface } from "types";
 
-const Login = ({ setUser }) => {
+interface props {
+  setUser: React.Dispatch<React.SetStateAction<UserInterface | null>>;
+}
+
+const Login = ({ setUser }: props) => {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const navigate = useNavigate();
 
-  const handleLogin = async (event) => {
+  const handleLogin = async (event: { preventDefault: () => void }) => {
     event.preventDefault();
 
     try {
