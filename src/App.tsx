@@ -3,7 +3,7 @@ import postService from "./services/postService";
 import { PostFormValue, PostInterface, UserInterface } from "../types";
 import axios from "axios";
 import PostForm from "./components/PostForm";
-import { Link, Navigate, Route, Routes, useMatch, useNavigate } from "react-router-dom";
+import { Link, Route, Routes, useMatch, useNavigate } from "react-router-dom";
 import Post from "./components/Post";
 import "./index.css";
 import { Button } from "./components/ui/button";
@@ -38,8 +38,10 @@ function App() {
       const user = JSON.parse(loggedUserJSON);
       setUser(user);
       postService.setToken(user.token);
+    } else {
+      navigate("/login");
     }
-  }, []);
+  }, [user]);
 
   const handleLogout = async (event: { preventDefault: () => void }) => {
     event.preventDefault();
@@ -128,7 +130,6 @@ function App() {
           <Routes>
             <Route path="/login" element={<Login setUser={setUser} />} />
             <Route path="/register" element={<Register setUser={setUser} />} />
-            <Route path="*" element={<Navigate to="/login" />} />
           </Routes>
         </div>
       </ThemeProvider>
