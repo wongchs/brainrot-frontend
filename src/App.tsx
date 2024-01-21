@@ -1,8 +1,5 @@
 import { useEffect, useState } from "react";
-import Notification from "./components/Notification";
-import LoginForm from "./components/LoginForm";
 import postService from "./services/postService";
-import loginService from "./services/loginService";
 import { PostFormValue, PostInterface, UserInterface } from "../types";
 import axios from "axios";
 import PostForm from "./components/PostForm";
@@ -13,11 +10,10 @@ import { Button } from "./components/ui/button";
 import { ThemeProvider } from "./components/theme-provider";
 import Sidebar from "./components/Sidebar";
 import Profile from "./components/Profile";
+import Login from "./components/Login";
 
 function App() {
   const [posts, setPosts] = useState<PostInterface[]>([]);
-  const [username, setUsername] = useState("");
-  const [password, setPassword] = useState("");
   const [user, setUser] = useState<UserInterface | null>(null);
   const [notification, setNotification] = useState<{
     message: string | null;
@@ -42,24 +38,6 @@ function App() {
       postService.setToken(user.token);
     }
   }, []);
-
-  const handleLogin = async (event: { preventDefault: () => void }) => {
-    event.preventDefault();
-
-    try {
-      const user = await loginService.login({
-        username,
-        password,
-      });
-      window.localStorage.setItem("loggedBlogUser", JSON.stringify(user));
-      setUser(user);
-      setUsername("");
-      setNotification({ message: `welcome ${user.name}`, type: "success" });
-    } catch (exception) {
-      setNotification({ message: "wrong username or password", type: "error" });
-    }
-    setTimeout(() => setNotification({ message: null, type: null }), 5000);
-  };
 
   const handleLogout = async (event: { preventDefault: () => void }) => {
     event.preventDefault();
@@ -137,19 +115,7 @@ function App() {
   if (user === null) {
     return (
       <ThemeProvider defaultTheme="dark" storageKey="vite-ui-theme">
-        <div>
-          <Notification
-            notification={notification.message}
-            type={notification.type}
-          />
-          <LoginForm
-            handleLogin={handleLogin}
-            username={username}
-            password={password}
-            setUsername={setUsername}
-            setPassword={setPassword}
-          />
-        </div>
+        <Login setUser={setUser} />
       </ThemeProvider>
     );
   }
@@ -164,6 +130,7 @@ function App() {
           </p>
           <PostForm createPost={addPost} user={user} />
           <Routes>
+            <Route path="/login" element={<Login setUser={setUser} />} />
             <Route
               path="/"
               element={
