@@ -7,18 +7,20 @@ interface props {
 }
 
 const EditProfile = ({ user, updateUser }: props) => {
-  const [username, setUsername] = useState(user.username);
-  const [name, setName] = useState(user.name);
+  const [username, setUsername] = useState("");
+  const [name, setName] = useState("");
   const [password, setPassword] = useState("");
 
   const handleUpdate = async (event: React.FormEvent) => {
     event.preventDefault();
 
-    await updateUser(user.id, {
-      username,
-      name,
-      password,
-    });
+    const userObject: UserFormValue = {
+      username: username || user.username,
+      name: name || user.name,
+      password: password,
+    };
+
+    await updateUser(user.id, userObject);
   };
 
   return (
@@ -27,18 +29,18 @@ const EditProfile = ({ user, updateUser }: props) => {
         Username:{" "}
         <input
           type="text"
+          placeholder={user.username}
           value={username}
           onChange={({ target }) => setUsername(target.value)}
-          required
         />
       </div>
       <div>
         Name:{" "}
         <input
           type="text"
+          placeholder={user.name}
           value={name}
           onChange={({ target }) => setName(target.value)}
-          required
         />
       </div>
       <div>
@@ -47,7 +49,6 @@ const EditProfile = ({ user, updateUser }: props) => {
           type="password"
           value={password}
           onChange={({ target }) => setPassword(target.value)}
-          required
         />
       </div>
       <button type="submit">Update</button>
