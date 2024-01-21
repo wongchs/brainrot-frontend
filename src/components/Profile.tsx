@@ -30,9 +30,10 @@ const Profile = ({ user }: props) => {
       <p>Username: {userWithPosts.username}</p>
       <h3>Posts:</h3>
       <ul>
-        {userWithPosts.posts.map((post) => (
-          <li key={post.id}>{post.content}</li>
-        ))}
+        {userWithPosts.posts &&
+          userWithPosts.posts.map((post) => (
+            <li key={post.id}>{post.content}</li>
+          ))}
       </ul>
     </div>
   );

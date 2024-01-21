@@ -24,13 +24,6 @@ import EditProfile from "./components/EditProfile";
 function App() {
   const [posts, setPosts] = useState<PostInterface[]>([]);
   const [user, setUser] = useState<UserInterface | null>(null);
-  const [notification, setNotification] = useState<{
-    message: string | null;
-    type: string | null;
-  }>({
-    message: null,
-    type: null,
-  });
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -69,11 +62,6 @@ function App() {
       const returnedPost = await postService.create(postObject);
       returnedPost.user = user;
       setPosts(posts.concat(returnedPost));
-      setNotification({
-        message: `a new post ${postObject.content} by ${postObject.user.name} added`,
-        type: "success",
-      });
-      setTimeout(() => setNotification({ message: null, type: null }), 5000);
     } catch (e: unknown) {
       if (axios.isAxiosError(e)) {
         if (e?.response?.data && typeof e?.response?.data === "string") {
@@ -98,11 +86,6 @@ function App() {
       setPosts(
         posts.map((post) => (post.id !== returnedPost.id ? post : returnedPost))
       );
-      setNotification({
-        message: `post successfully updated`,
-        type: "success",
-      });
-      setTimeout(() => setNotification({ message: null, type: null }), 5000);
     } catch (e: unknown) {
       if (axios.isAxiosError(e)) {
         if (e?.response?.data && typeof e?.response?.data === "string") {
@@ -130,11 +113,6 @@ function App() {
     try {
       const returnedUser = await userService.update(id, userObject);
       setUser(returnedUser);
-      setNotification({
-        message: `User details successfully updated`,
-        type: "success",
-      });
-      setTimeout(() => setNotification({ message: null, type: null }), 5000);
     } catch (e: unknown) {
       console.error("Unknown error", e);
     }
