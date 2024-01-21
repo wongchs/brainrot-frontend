@@ -5,7 +5,7 @@ import { Input } from "./ui/input";
 function Sidebar() {
   return (
     <div
-      className="flex fixed top-0 left-0 w-40 flex-col h-screen p-3 shadow duration-100"
+      className="flex fixed top-0 left-0 w-40 flex-col h-screen p-3 shadow duration-100 border-r dark:border-gray-700"
     >
       <div className="space-y-3">
         <div className="flex items-center justify-between">
