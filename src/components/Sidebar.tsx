@@ -29,7 +29,7 @@ const Sidebar = ({ user, handleLogout }: props) => {
             className="w-full py-2 pl-10 text-sm rounded-md focus:outline-none"
           />
         </div>
-        <div className="flex flex-col h-full gap-56">
+        <div className="flex flex-col w- h-full gap-56">
           <ul className="pt-2 pb-4 space-y-1 text-sm flex-grow">
             <li className="rounded-sm">
               <Link
