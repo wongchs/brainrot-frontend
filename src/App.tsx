@@ -38,6 +38,7 @@ function App() {
       setUser(user);
       postService.setToken(user.token);
       userService.setToken(user.token);
+      console.log(user.token);
     } else {
       navigate("/login");
     }
@@ -46,6 +47,7 @@ function App() {
   useEffect(() => {
     if (user) {
       postService.setToken(user.token);
+      userService.setToken(user.token);
     }
   }, [user]);
 

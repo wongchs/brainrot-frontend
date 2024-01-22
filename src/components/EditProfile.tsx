@@ -1,7 +1,14 @@
 import { useState } from "react";
 import { UserInterface, UserFormValue } from "types";
 import { Button } from "@/components/ui/button";
-import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardFooter,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
@@ -28,6 +35,8 @@ const EditProfile = ({ user, updateUser }: props) => {
     await updateUser(user.id, userObject);
   };
 
+  console.log(user);
+
   return (
     <Tabs defaultValue="account" className="w-[400px]">
       <TabsList className="grid w-full grid-cols-2">
@@ -45,11 +54,19 @@ const EditProfile = ({ user, updateUser }: props) => {
           <CardContent className="space-y-2">
             <div className="space-y-1">
               <Label htmlFor="name">Name</Label>
-              <Input id="name" value={name} onChange={({ target }) => setName(target.value)} />
+              <Input
+                id="name"
+                value={name}
+                onChange={({ target }) => setName(target.value)}
+              />
             </div>
             <div className="space-y-1">
               <Label htmlFor="username">Username</Label>
-              <Input id="username" value={username} onChange={({ target }) => setUsername(target.value)} />
+              <Input
+                id="username"
+                value={username}
+                onChange={({ target }) => setUsername(target.value)}
+              />
             </div>
           </CardContent>
           <CardFooter>
@@ -62,13 +79,18 @@ const EditProfile = ({ user, updateUser }: props) => {
           <CardHeader>
             <CardTitle>Password</CardTitle>
             <CardDescription>
-              Change your password here. After saving, you'll be logged out.
+              Change your password here.
             </CardDescription>
           </CardHeader>
           <CardContent className="space-y-2">
             <div className="space-y-1">
               <Label htmlFor="password">New password</Label>
-              <Input id="password" type="password" value={password} onChange={({ target }) => setPassword(target.value)} />
+              <Input
+                id="password"
+                type="password"
+                value={password}
+                onChange={({ target }) => setPassword(target.value)}
+              />
             </div>
           </CardContent>
           <CardFooter>
