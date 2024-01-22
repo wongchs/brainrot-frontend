@@ -24,6 +24,7 @@ interface Props {
         user: UserInterface;
         id: string;
         likes?: number;
+        comments?: CommentInterface[];
       }
     | null
     | undefined;
@@ -36,9 +37,19 @@ interface Props {
     id: PostInterface["id"],
     newObject: LikePostFormValue
   ) => Promise<void>;
+  commentPost: (
+    id: PostInterface["id"],
+    newObject: CommentInterface
+  ) => Promise<void>;
 }
 
-const Post = ({ post, updatePost, deletePost, likePost }: Props) => {
+const Post = ({
+  post,
+  updatePost,
+  deletePost,
+  likePost,
+  commentPost,
+}: Props) => {
   const [newContent, setNewContent] = useState("");
   const [newComment, setNewComment] = useState("");
   const [isDeleteDialogOpen, setIsDeleteDialogOpen] = useState(false);
@@ -69,6 +80,17 @@ const Post = ({ post, updatePost, deletePost, likePost }: Props) => {
     await likePost(post.id, likedPost);
   };
 
+  const handleComment = async () => {
+    const commentObject = {
+      text: newComment,
+      username: post.user.username,
+      name: post.user.name,
+      id: post.id,
+    };
+    await commentPost(post.id, commentObject);
+    setNewComment("");
+  };
+
   return (
     <div>
       <h2>{post.content}</h2>
@@ -83,6 +105,12 @@ const Post = ({ post, updatePost, deletePost, likePost }: Props) => {
       <button onClick={handleUpdate}>Update Post</button>
       <button onClick={() => setIsDeleteDialogOpen(true)}>Delete Post</button>
       <button onClick={handleLike}>Like Post</button>
+      <input
+        type="text"
+        value={newComment}
+        onChange={(e) => setNewComment(e.target.value)}
+      />
+      <button onClick={handleComment}>Comment</button>
       {isDeleteDialogOpen && (
         <AlertDialog
           open={isDeleteDialogOpen}

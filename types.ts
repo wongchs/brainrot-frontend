@@ -12,6 +12,7 @@ export interface PostInterface {
   content: string;
   user: UserInterface;
   likes?: number;
+  comments?: CommentInterface[];
 }
 
 export interface CommentInterface {

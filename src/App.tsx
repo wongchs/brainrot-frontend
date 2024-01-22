@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import postService from "./services/postService";
 import {
+  CommentInterface,
   LikePostFormValue,
   PostFormValue,
   PostInterface,
@@ -122,6 +123,20 @@ function App() {
     }
   };
 
+  const commentPost = async (id: string, commentObject: CommentInterface) => {
+    try {
+      const returnedComment = await postService.comment(id, commentObject);
+      setPosts(
+        posts.map((post) =>
+          post.id !== id ? post : { ...post, comments: [...post.comments, returnedComment] }
+        )
+      );
+    } catch (e) {
+      console.error("Unknown error", e);
+    }
+  };
+  
+
   const updateUser = async (id: string, userObject: UserFormValue) => {
     try {
       const returnedUser = await userService.update(id, userObject);
@@ -189,6 +204,7 @@ function App() {
                   updatePost={updatePost}
                   deletePost={deletePost}
                   likePost={likePost}
+                  commentPost={commentPost}
                 />
               }
             />
