@@ -11,11 +11,22 @@ export interface PostInterface {
   id: string;
   content: string;
   user: UserInterface;
+  likes?: number;
+}
+
+export interface CommentInterface {
+  text: string;
+  username: string;
+  name: string;
+  id: string;
 }
 
 export type PostFormValue = Omit<PostInterface, "id">;
 
-export type UserFormValue = Omit<
-  UserInterface,
-  "id" | "passwordHash"
-> & { password: string };
+export type UserFormValue = Omit<UserInterface, "id" | "passwordHash"> & {
+  password: string;
+};
+
+export type LikePostFormValue = Omit<PostInterface, "content" | "likes"> & {
+  user: UserInterface;
+};

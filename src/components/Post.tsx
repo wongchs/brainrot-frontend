@@ -1,5 +1,11 @@
 import { useState } from "react";
-import { PostFormValue, PostInterface, UserInterface } from "../../types";
+import {
+  CommentInterface,
+  LikePostFormValue,
+  PostFormValue,
+  PostInterface,
+  UserInterface,
+} from "../../types";
 import {
   AlertDialog,
   AlertDialogAction,
@@ -17,6 +23,7 @@ interface Props {
         content: string;
         user: UserInterface;
         id: string;
+        likes?: number;
       }
     | null
     | undefined;
@@ -25,10 +32,15 @@ interface Props {
     newObject: PostFormValue
   ) => Promise<void>;
   deletePost: (id: PostInterface["id"]) => Promise<void>;
+  likePost: (
+    id: PostInterface["id"],
+    newObject: LikePostFormValue
+  ) => Promise<void>;
 }
 
-const Post = ({ post, updatePost, deletePost }: Props) => {
+const Post = ({ post, updatePost, deletePost, likePost }: Props) => {
   const [newContent, setNewContent] = useState("");
+  const [newComment, setNewComment] = useState("");
   const [isDeleteDialogOpen, setIsDeleteDialogOpen] = useState(false);
   const [isUpdateDialogOpen, setIsUpdateDialogOpen] = useState(false);
 
@@ -49,11 +61,20 @@ const Post = ({ post, updatePost, deletePost }: Props) => {
     await deletePost(post.id);
   };
 
+  const handleLike = async () => {
+    const likedPost = {
+      id: post.id,
+      user: post.user,
+    };
+    await likePost(post.id, likedPost);
+  };
+
   return (
     <div>
       <h2>{post.content}</h2>
       <p>{post.user.name}</p>
       <p>by {post.user.username}</p>
+      <p>likes: {post.likes}</p>
       <input
         type="text"
         value={newContent}
@@ -61,6 +82,7 @@ const Post = ({ post, updatePost, deletePost }: Props) => {
       />
       <button onClick={handleUpdate}>Update Post</button>
       <button onClick={() => setIsDeleteDialogOpen(true)}>Delete Post</button>
+      <button onClick={handleLike}>Like Post</button>
       {isDeleteDialogOpen && (
         <AlertDialog
           open={isDeleteDialogOpen}

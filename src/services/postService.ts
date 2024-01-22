@@ -41,4 +41,34 @@ const deleteObject = async (id: PostInterface["id"]) => {
   return response.data;
 };
 
-export default { getAll, setToken, create, update, deleteObject };
+const like = async (id, newObject) => {
+  const config = {
+    headers: { Authorization: token },
+  };
+
+  const response = await axios.put(`/api/posts/${id}/like`, newObject, config);
+  return response.data;
+};
+
+const comment = async (id, newObject) => {
+  const config = {
+    headers: { Authorization: token },
+  };
+
+  const response = await axios.post(
+    `/api/posts/${id}/comment`,
+    newObject,
+    config
+  );
+  return response.data;
+};
+
+export default {
+  getAll,
+  setToken,
+  create,
+  update,
+  deleteObject,
+  like,
+  comment,
+};
