@@ -1,5 +1,10 @@
 import axios from "axios";
-import { PostFormValue, PostInterface } from "../../types";
+import {
+  CommentInterface,
+  LikePostFormValue,
+  PostFormValue,
+  PostInterface,
+} from "../../types";
 
 const baseUrl = "/api/posts";
 
@@ -41,7 +46,7 @@ const deleteObject = async (id: PostInterface["id"]) => {
   return response.data;
 };
 
-const like = async (id, newObject) => {
+const like = async (id: string, newObject: LikePostFormValue) => {
   const config = {
     headers: { Authorization: token },
   };
@@ -50,7 +55,7 @@ const like = async (id, newObject) => {
   return response.data;
 };
 
-const comment = async (id, newObject) => {
+const comment = async (id: string, newObject: CommentInterface) => {
   const config = {
     headers: { Authorization: token },
   };
