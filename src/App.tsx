@@ -11,7 +11,6 @@ import PostForm from "./components/PostForm";
 import { Link, Route, Routes, useMatch, useNavigate } from "react-router-dom";
 import Post from "./components/Post";
 import "./index.css";
-import { Button } from "./components/ui/button";
 import { ThemeProvider } from "./components/theme-provider";
 import Sidebar from "./components/Sidebar";
 import Profile from "./components/Profile";
@@ -50,8 +49,7 @@ function App() {
     }
   }, [user]);
 
-  const handleLogout = async (event: { preventDefault: () => void }) => {
-    event.preventDefault();
+  const handleLogout = async () => {
     window.localStorage.removeItem("loggedBlogUser");
     setUser(null);
     navigate("/login");
@@ -146,27 +144,26 @@ function App() {
   return (
     <ThemeProvider defaultTheme="dark" storageKey="vite-ui-theme">
       <div className="flex">
-        <Sidebar user={user} />
+        <Sidebar user={user} handleLogout={handleLogout} />
         <div className="flex-grow ml-72 p-8">
-          <p>
-            {user.name} logged in <Button onClick={handleLogout}>logout</Button>
-          </p>
-          <PostForm createPost={addPost} user={user} />
           <Routes>
             <Route path="/login" element={<Login setUser={setUser} />} />
             <Route path="/register" element={<Register setUser={setUser} />} />
             <Route
               path="/"
               element={
-                <ul>
-                  {posts.map((post) => (
-                    <li key={post.id}>
-                      <Link to={`/${post.user.username}/post/${post.id}`}>
-                        {post.content}
-                      </Link>
-                    </li>
-                  ))}
-                </ul>
+                <div>
+                  <PostForm createPost={addPost} user={user} />
+                  <ul>
+                    {posts.map((post) => (
+                      <li key={post.id}>
+                        <Link to={`/${post.user.username}/post/${post.id}`}>
+                          {post.content}
+                        </Link>
+                      </li>
+                    ))}
+                  </ul>
+                </div>
               }
             />
             <Route
