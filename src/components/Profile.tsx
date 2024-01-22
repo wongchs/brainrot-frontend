@@ -2,6 +2,7 @@ import userService from "@/services/userService";
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { UserInterface } from "types";
+import { Skeleton } from "./ui/skeleton";
 
 interface props {
   user: UserInterface;
@@ -18,9 +19,8 @@ const Profile = ({ user }: props) => {
     });
   }, [user.id]);
 
-  console.log(userWithPosts);
   if (!userWithPosts) {
-    return <div className="text-red-500">User not found</div>;
+    return <Skeleton className="w-[100px] h-[20px] rounded-full" />;
   }
 
   return (
@@ -35,7 +35,9 @@ const Profile = ({ user }: props) => {
         {userWithPosts.posts &&
           userWithPosts.posts.map((post) => (
             <li key={post.id} className="mt-2">
-              {post.content}
+              <Link to={`/${user.username}/post/${post.id}`}>
+                {post.content}
+              </Link>
             </li>
           ))}
       </ul>
