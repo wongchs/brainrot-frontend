@@ -128,14 +128,18 @@ function App() {
       const returnedComment = await postService.comment(id, commentObject);
       setPosts(
         posts.map((post) =>
-          post.id !== id ? post : { ...post, comments: [...post.comments, returnedComment] }
+          post.id !== id
+            ? post
+            : {
+                ...post,
+                comments: [...(post.comments || []), returnedComment],
+              }
         )
       );
     } catch (e) {
       console.error("Unknown error", e);
     }
   };
-  
 
   const updateUser = async (id: string, userObject: UserFormValue) => {
     try {
