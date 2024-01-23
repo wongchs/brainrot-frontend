@@ -9,13 +9,17 @@ interface props {
 }
 
 const Profile = ({ currentUser }: props) => {
-  const [userWithPosts, setUserWithPosts] = useState<UserInterface | null>(null);
+  const [userWithPosts, setUserWithPosts] = useState<UserInterface | null>(
+    null
+  );
   const { id } = useParams();
 
   useEffect(() => {
-    userService.getById(id).then((userData) => {
-      setUserWithPosts(userData);
-    });
+    if (id) {
+      userService.getById(id).then((userData) => {
+        setUserWithPosts(userData);
+      });
+    }
   }, [id]);
 
   if (!userWithPosts) {
@@ -27,7 +31,10 @@ const Profile = ({ currentUser }: props) => {
       <h2 className="text-2xl font-bold mb-2">{userWithPosts.name}</h2>
       <p className="mt-2">Username: {userWithPosts.username}</p>
       {currentUser.id === id && (
-        <Link to={`/profile/${currentUser.username}/edit`} className="text-blue-500">
+        <Link
+          to={`/profile/${currentUser.username}/edit`}
+          className="text-blue-500"
+        >
           Edit Profile
         </Link>
       )}
