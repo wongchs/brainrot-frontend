@@ -114,10 +114,12 @@ function App() {
   const likePost = async (id: string, postObject: LikePostFormValue) => {
     try {
       const likedPost = await postService.like(id, postObject);
-      likedPost.user = user;
       setPosts(
-        posts.map((post) => (post.id !== likedPost.id ? post : likedPost))
+        posts.map((post) =>
+          post.id !== likedPost.id ? post : { ...post, likes: likedPost.likes }
+        )
       );
+      console.log(likedPost.user);
     } catch (e) {
       console.error("unknow error", e);
     }

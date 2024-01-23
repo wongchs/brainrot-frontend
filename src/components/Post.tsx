@@ -77,7 +77,7 @@ const Post = ({
   const handleLike = async () => {
     const likedPost = {
       id: post.id,
-      user: post.user,
+      user: user,
     };
     await likePost(post.id, likedPost);
   };
