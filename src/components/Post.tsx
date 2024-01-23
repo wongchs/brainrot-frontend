@@ -16,6 +16,7 @@ import {
   AlertDialogHeader,
   AlertDialogTitle,
 } from "@/components/ui/alert-dialog";
+import { Link } from "react-router-dom";
 
 interface Props {
   post:
@@ -99,8 +100,10 @@ const Post = ({
   return (
     <div>
       <h2>{post.content}</h2>
-      <p>{post.user.name}</p>
-      <p>by {post.user.username}</p>
+      <Link to={`/profile/${post.user.id}/${post.user.username}`}>
+        <p>{post.user.name}</p>
+        <p>by {post.user.username}</p>
+      </Link>
       <p>likes: {post.likes}</p>
       <input
         type="text"
