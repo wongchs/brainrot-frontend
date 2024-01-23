@@ -5,6 +5,8 @@ export interface UserInterface {
   posts?: PostInterface[];
   id: string;
   token?: string;
+  following: string[];
+  followers: string[];
 }
 
 export interface PostInterface {
@@ -24,7 +26,10 @@ export interface CommentInterface {
 
 export type PostFormValue = Omit<PostInterface, "id">;
 
-export type UserFormValue = Omit<UserInterface, "id" | "passwordHash"> & {
+export type UserFormValue = Omit<
+  UserInterface,
+  "id" | "passwordHash" | "following" | "followers"
+> & {
   password: string;
 };
 
