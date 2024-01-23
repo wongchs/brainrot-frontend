@@ -26,6 +26,18 @@ const Profile = ({ currentUser }: props) => {
     return <Skeleton className="w-[100px] h-[20px] rounded-full" />;
   }
 
+  const handleFollow = async () => {
+    if (userWithPosts) {
+      await userService.follow(userWithPosts.id);
+    }
+  };
+
+  const handleUnfollow = async () => {
+    if (userWithPosts) {
+      await userService.unfollow(userWithPosts.id);
+    }
+  };
+
   return (
     <div className="p-4 shadow-md rounded-md">
       <h2 className="text-2xl font-bold mb-2">{userWithPosts.name}</h2>
@@ -37,6 +49,12 @@ const Profile = ({ currentUser }: props) => {
         >
           Edit Profile
         </Link>
+      )}
+      {currentUser.id !== id && (
+        <div>
+          <button onClick={handleFollow}>Follow</button>
+          <button onClick={handleUnfollow}>Unfollow</button>
+        </div>
       )}
       <h3 className="text-xl font-semibold mt-4">Posts:</h3>
       <ul className="list-disc ml-5">

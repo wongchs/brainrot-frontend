@@ -34,4 +34,30 @@ const update = async (id: UserInterface["id"], userDetails: UserFormValue) => {
   return response.data;
 };
 
-export default { getByUsername, setToken, getById, register, update };
+const follow = async (id: UserInterface["id"]) => {
+  const config = {
+    headers: { Authorization: token },
+  };
+
+  const response = await axios.put(`${baseUrl}/${id}/follow`, {}, config);
+  return response.data;
+};
+
+const unfollow = async (id: UserInterface["id"]) => {
+  const config = {
+    headers: { Authorization: token },
+  };
+
+  const response = await axios.put(`${baseUrl}/${id}/unfollow`, {}, config);
+  return response.data;
+};
+
+export default {
+  getByUsername,
+  setToken,
+  getById,
+  register,
+  update,
+  follow,
+  unfollow,
+};
