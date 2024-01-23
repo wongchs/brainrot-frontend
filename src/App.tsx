@@ -130,12 +130,10 @@ function App() {
         posts.map((post) =>
           post.id !== id
             ? post
-            : {
-                ...post,
-                comments: [...(post.comments || []), returnedComment],
-              }
+            : { ...post, comments: [...(post.comments || []), returnedComment] }
         )
       );
+      console.log(returnedComment);
     } catch (e) {
       console.error("Unknown error", e);
     }
@@ -209,6 +207,7 @@ function App() {
                   deletePost={deletePost}
                   likePost={likePost}
                   commentPost={commentPost}
+                  user={user}
                 />
               }
             />

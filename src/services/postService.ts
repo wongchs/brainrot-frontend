@@ -65,6 +65,8 @@ const comment = async (id: string, newObject: CommentInterface) => {
     newObject,
     config
   );
+
+  console.log(newObject);
   return response.data;
 };
 

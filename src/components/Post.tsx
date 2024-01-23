@@ -41,6 +41,7 @@ interface Props {
     id: PostInterface["id"],
     newObject: CommentInterface
   ) => Promise<void>;
+  user: UserInterface;
 }
 
 const Post = ({
@@ -49,6 +50,7 @@ const Post = ({
   deletePost,
   likePost,
   commentPost,
+  user,
 }: Props) => {
   const [newContent, setNewContent] = useState("");
   const [newComment, setNewComment] = useState("");
@@ -82,11 +84,10 @@ const Post = ({
 
   const handleComment = async () => {
     const commentObject = {
-      text: newComment,
-      username: post.user.username,
-      name: post.user.name,
-      id: post.id,
+      comment: newComment,
+      user: user,
     };
+    console.log(commentObject);
     await commentPost(post.id, commentObject);
     setNewComment("");
   };
