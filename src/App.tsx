@@ -125,17 +125,18 @@ function App() {
 
   const commentPost = async (id: string, commentObject: CommentInterface) => {
     try {
-      const returnedComment = await postService.comment(id, commentObject);
       setPosts(
         posts.map((post) =>
           post.id !== id
             ? post
-            : { ...post, comments: [...(post.comments || []), returnedComment] }
+            : { ...post, comments: [...(post.comments || []), commentObject] }
         )
       );
+      const returnedComment = await postService.comment(id, commentObject);
       console.log(returnedComment);
     } catch (e) {
       console.error("Unknown error", e);
+      setPosts(posts);
     }
   };
 
@@ -207,6 +208,7 @@ function App() {
                   deletePost={deletePost}
                   likePost={likePost}
                   commentPost={commentPost}
+                  user={user}
                 />
               }
             />
