@@ -145,7 +145,9 @@ function App() {
   const updateUser = async (id: string, userObject: UserFormValue) => {
     try {
       const returnedUser = await userService.update(id, userObject);
-      setUser(returnedUser);
+      const updatedUser = { ...user, ...returnedUser };
+      setUser(updatedUser);
+      console.log(returnedUser);
     } catch (e: unknown) {
       console.error("Unknown error", e);
     }
