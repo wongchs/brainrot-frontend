@@ -207,7 +207,6 @@ function App() {
                   deletePost={deletePost}
                   likePost={likePost}
                   commentPost={commentPost}
-                  user={user}
                 />
               }
             />

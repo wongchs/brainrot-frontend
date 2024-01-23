@@ -16,8 +16,10 @@ export interface PostInterface {
 }
 
 export interface CommentInterface {
-  comment: string;
-  user: UserInterface;
+  text: string;
+  username: string;
+  name: string;
+  id: string;
 }
 
 export type PostFormValue = Omit<PostInterface, "id">;

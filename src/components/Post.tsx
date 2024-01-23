@@ -41,7 +41,6 @@ interface Props {
     id: PostInterface["id"],
     newObject: CommentInterface
   ) => Promise<void>;
-  user: UserInterface;
 }
 
 const Post = ({
@@ -50,7 +49,6 @@ const Post = ({
   deletePost,
   likePost,
   commentPost,
-  user,
 }: Props) => {
   const [newContent, setNewContent] = useState("");
   const [newComment, setNewComment] = useState("");
@@ -84,13 +82,17 @@ const Post = ({
 
   const handleComment = async () => {
     const commentObject = {
-      comment: newComment,
-      user: user,
+      text: newComment,
+      username: post.user.username,
+      name: post.user.name,
+      id: post.user.id,
     };
     console.log(commentObject);
     await commentPost(post.id, commentObject);
     setNewComment("");
   };
+
+  console.log(post.comments);
 
   return (
     <div>
@@ -112,6 +114,14 @@ const Post = ({
         onChange={(e) => setNewComment(e.target.value)}
       />
       <button onClick={handleComment}>Comment</button>
+      {post.comments &&
+        post.comments.map((comment, index) => (
+          <div key={index}>
+            <p>
+              {comment.name}: {comment.text}
+            </p>
+          </div>
+        ))}
       {isDeleteDialogOpen && (
         <AlertDialog
           open={isDeleteDialogOpen}
