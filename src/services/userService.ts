@@ -9,7 +9,7 @@ const setToken = (newToken: any) => {
 };
 
 const getByUsername = (username: string) => {
-  const request = axios.get(`${baseUrl}/profile/${username}`);
+  const request = axios.get(`${baseUrl}/${username}`);
   return request.then((response) => response.data);
 };
 

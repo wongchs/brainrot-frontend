@@ -42,7 +42,7 @@ const Sidebar = ({ user, handleLogout }: props) => {
             </li>
             <li className="rounded-sm">
               <Link
-                to={`/profile/${user.username}`}
+                to={`/profile/${user.id}/${user.username}`}
                 className="flex items-center p-2 space-x-3 rounded-md"
               >
                 <User />

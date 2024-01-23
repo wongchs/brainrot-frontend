@@ -216,7 +216,11 @@ function App() {
                 />
               }
             />
-            <Route path="/profile/:id" element={<Profile user={user} />} />
+            <Route
+              path="/profile/:id/:username"
+              element={<Profile currentUser={user} />}
+            />
+
             <Route
               path="/profile/:id/edit"
               element={<EditProfile user={user} updateUser={updateUser} />}
