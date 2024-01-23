@@ -120,8 +120,8 @@ const Post = ({
       />
       <button onClick={handleComment}>Comment</button>
       {post.comments &&
-        post.comments.map((comment, index) => (
-          <div key={index}>
+        post.comments.map((comment) => (
+          <div key={comment.id}>
             <p>
               {comment.name}: {comment.text}
             </p>
