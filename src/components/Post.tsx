@@ -110,8 +110,19 @@ const Post = ({
         value={newContent}
         onChange={(e) => setNewContent(e.target.value)}
       />
-      <button onClick={handleUpdate}>Update Post</button>
-      <button onClick={() => setIsDeleteDialogOpen(true)}>Delete Post</button>
+      {post.user.id === user.id && (
+        <>
+          <input
+            type="text"
+            value={newContent}
+            onChange={(e) => setNewContent(e.target.value)}
+          />
+          <button onClick={handleUpdate}>Update Post</button>
+          <button onClick={() => setIsDeleteDialogOpen(true)}>
+            Delete Post
+          </button>
+        </>
+      )}
       <button onClick={handleLike}>Like Post</button>
       <input
         type="text"
