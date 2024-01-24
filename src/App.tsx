@@ -26,6 +26,7 @@ import { io } from "socket.io-client";
 function App() {
   const [posts, setPosts] = useState<PostInterface[]>([]);
   const [user, setUser] = useState<UserInterface | null>(null);
+  const [notifications, setNotifications] = useState([]);
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -56,11 +57,12 @@ function App() {
 
   useEffect(() => {
     const socket = io("http://localhost:3001/");
-    console.log(socket)
+    console.log(socket);
     if (user) {
       socket.emit("join", user.id);
     }
     socket.on("notification", (notification) => {
+      handleNewNotification(notification);
       console.log(notification);
     });
     return () => {
@@ -70,6 +72,10 @@ function App() {
       socket.off("notification");
     };
   }, [user]);
+
+  const handleNewNotification = (notification) => {
+    setNotifications([...notifications, notification]);
+  };
 
   const handleLogout = async () => {
     window.localStorage.removeItem("loggedBlogUser");
@@ -199,7 +205,11 @@ function App() {
   return (
     <ThemeProvider defaultTheme="dark" storageKey="vite-ui-theme">
       <div className="flex">
-        <Sidebar user={user} handleLogout={handleLogout} />
+        <Sidebar
+          user={user}
+          handleLogout={handleLogout}
+          notifications={notifications}
+        />
         <div className="flex-grow ml-72 p-8">
           <Routes>
             <Route path="/login" element={<Login setUser={setUser} />} />
