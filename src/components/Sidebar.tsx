@@ -3,7 +3,6 @@ import { ModeToggle } from "./mode-toggle";
 import { Input } from "./ui/input";
 import { Link } from "react-router-dom";
 import { UserInterface } from "types";
-import { useState } from "react";
 import { Popover, PopoverContent, PopoverTrigger } from "./ui/popover";
 
 interface props {
@@ -12,12 +11,6 @@ interface props {
 }
 
 const Sidebar = ({ user, handleLogout, notifications }: props) => {
-  const [isPopoverOpen, setIsPopoverOpen] = useState(false);
-
-  const togglePopover = () => {
-    setIsPopoverOpen(!isPopoverOpen);
-  };
-
   return (
     <div className="flex fixed top-0 left-0 w-60 flex-col h-screen p-8 dark:bg-gray-800 shadow duration-100 border-r dark:border-gray-700">
       <div className="space-y-3">
@@ -64,23 +57,17 @@ const Sidebar = ({ user, handleLogout, notifications }: props) => {
               </div>
             </li>
             <li className="rounded-sm">
-              <div
-                className="flex items-center p-2 space-x-3 rounded-md"
-                onClick={togglePopover}
-              >
-                <Bell />
-                <span>Notifications</span>
-              </div>
-              {isPopoverOpen && (
-                <Popover>
-                  <PopoverTrigger>Open</PopoverTrigger>
-                  <PopoverContent>
-                    {notifications.map((notification, index) => (
-                      <p key={index}>{notification.message}</p>
-                    ))}
-                  </PopoverContent>
-                </Popover>
-              )}
+              <Popover>
+                <PopoverTrigger className="flex items-center p-2 space-x-3 rounded-md">
+                  <Bell />
+                  <span>Notifications</span>
+                </PopoverTrigger>
+                <PopoverContent>
+                  {notifications.map((notification, index) => (
+                    <p key={index}>{notification.message}</p>
+                  ))}
+                </PopoverContent>
+              </Popover>
             </li>
           </ul>
           <ul className="pt-2 pb-4 space-y-1 text-sm">
