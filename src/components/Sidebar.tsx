@@ -59,7 +59,12 @@ const Sidebar = ({ user, handleLogout, notifications }: props) => {
             <li className="rounded-sm">
               <Popover>
                 <PopoverTrigger className="flex items-center p-2 space-x-3 rounded-md">
-                  <Bell />
+                  <div className="relative">
+                    <Bell />
+                    {notifications.length > 0 && (
+                      <span className="absolute top-0 right-0 w-2 h-2 bg-red-500 rounded-full"></span>
+                    )}
+                  </div>
                   <span>Notifications</span>
                 </PopoverTrigger>
                 <PopoverContent>
