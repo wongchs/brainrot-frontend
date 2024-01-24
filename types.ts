@@ -36,3 +36,7 @@ export type UserFormValue = Omit<
 export type LikePostFormValue = Omit<PostInterface, "content" | "likes"> & {
   user: UserInterface;
 };
+
+export interface Notification {
+  message: string;
+}

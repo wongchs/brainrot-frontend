@@ -3,6 +3,7 @@ import postService from "./services/postService";
 import {
   CommentInterface,
   LikePostFormValue,
+  Notification,
   PostFormValue,
   PostInterface,
   UserFormValue,
@@ -26,7 +27,7 @@ import { io } from "socket.io-client";
 function App() {
   const [posts, setPosts] = useState<PostInterface[]>([]);
   const [user, setUser] = useState<UserInterface | null>(null);
-  const [notifications, setNotifications] = useState([]);
+  const [notifications, setNotifications] = useState<Notification[]>([]);
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -73,7 +74,7 @@ function App() {
     };
   }, [user]);
 
-  const handleNewNotification = (notification) => {
+  const handleNewNotification = (notification: Notification) => {
     setNotifications([...notifications, notification]);
   };
 

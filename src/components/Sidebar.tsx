@@ -2,12 +2,13 @@ import { Home, Search, User, LogOut, Bell } from "lucide-react";
 import { ModeToggle } from "./mode-toggle";
 import { Input } from "./ui/input";
 import { Link } from "react-router-dom";
-import { UserInterface } from "types";
+import { Notification, UserInterface } from "types";
 import { Popover, PopoverContent, PopoverTrigger } from "./ui/popover";
 
 interface props {
   user: UserInterface;
   handleLogout: () => void;
+  notifications: Notification[];
 }
 
 const Sidebar = ({ user, handleLogout, notifications }: props) => {
