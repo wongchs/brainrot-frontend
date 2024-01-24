@@ -9,9 +9,17 @@ interface props {
   user: UserInterface;
   handleLogout: () => void;
   notifications: Notification[];
+  showNotification: boolean;
+  handleNotificationClick: () => void;
 }
 
-const Sidebar = ({ user, handleLogout, notifications }: props) => {
+const Sidebar = ({
+  user,
+  handleLogout,
+  notifications,
+  showNotification,
+  handleNotificationClick,
+}: props) => {
   return (
     <div className="flex fixed top-0 left-0 w-60 flex-col h-screen p-8 dark:bg-gray-800 shadow duration-100 border-r dark:border-gray-700">
       <div className="space-y-3">
@@ -54,10 +62,13 @@ const Sidebar = ({ user, handleLogout, notifications }: props) => {
             </li>
             <li className="rounded-sm hover:bg-gray-200 dark:hover:bg-slate-600">
               <Popover>
-                <PopoverTrigger className="flex items-center p-2 space-x-3 rounded-md">
+                <PopoverTrigger
+                  onClick={handleNotificationClick}
+                  className="flex items-center p-2 space-x-3 rounded-md"
+                >
                   <div className="relative">
                     <Bell />
-                    {notifications.length > 0 && (
+                    {showNotification && notifications.length > 0 && (
                       <span className="absolute top-0 right-0 w-2 h-2 bg-red-500 rounded-full"></span>
                     )}
                   </div>
@@ -80,7 +91,8 @@ const Sidebar = ({ user, handleLogout, notifications }: props) => {
               <li className="rounded-sm">
                 <div className="flex items-center p-2 space-x-3 rounded-md">
                   <p className="text-sm">
-                    Logged in as: <span className="font-bold underline">{user.username}</span>
+                    Logged in as:{" "}
+                    <span className="font-bold underline">{user.username}</span>
                   </p>
                 </div>
               </li>

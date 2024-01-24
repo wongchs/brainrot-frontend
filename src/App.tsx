@@ -28,6 +28,7 @@ function App() {
   const [posts, setPosts] = useState<PostInterface[]>([]);
   const [user, setUser] = useState<UserInterface | null>(null);
   const [notifications, setNotifications] = useState<Notification[]>([]);
+  const [showNotification, setShowNotification] = useState(false);
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -76,6 +77,11 @@ function App() {
 
   const handleNewNotification = (notification: Notification) => {
     setNotifications([...notifications, notification]);
+    setShowNotification(true);
+  };
+
+  const handleNotificationClick = () => {
+    setShowNotification(false);
   };
 
   const handleLogout = async () => {
@@ -210,6 +216,8 @@ function App() {
           user={user}
           handleLogout={handleLogout}
           notifications={notifications}
+          showNotification={showNotification}
+          handleNotificationClick={handleNotificationClick}
         />
         <div className="flex-grow ml-72 p-8">
           <Routes>
