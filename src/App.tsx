@@ -23,6 +23,8 @@ import Register from "./components/Register";
 import userService from "./services/userService";
 import EditProfile from "./components/EditProfile";
 import { io } from "socket.io-client";
+import { useMediaQuery } from "react-responsive";
+import FooterNav from "./components/FooterNav";
 
 function App() {
   const [posts, setPosts] = useState<PostInterface[]>([]);
@@ -30,6 +32,9 @@ function App() {
   const [notifications, setNotifications] = useState<Notification[]>([]);
   const [showNotification, setShowNotification] = useState(false);
   const navigate = useNavigate();
+  const isDesktopOrLaptop = useMediaQuery({
+    query: "(min-device-width: 1224px)",
+  });
 
   useEffect(() => {
     postService.getAll().then((posts) => {
@@ -212,14 +217,24 @@ function App() {
   return (
     <ThemeProvider defaultTheme="dark" storageKey="vite-ui-theme">
       <div className="flex">
-        <Sidebar
-          user={user}
-          handleLogout={handleLogout}
-          notifications={notifications}
-          showNotification={showNotification}
-          handleNotificationClick={handleNotificationClick}
-        />
-        <div className="flex-grow ml-72 p-8">
+        {isDesktopOrLaptop ? (
+          <Sidebar
+            user={user}
+            handleLogout={handleLogout}
+            notifications={notifications}
+            showNotification={showNotification}
+            handleNotificationClick={handleNotificationClick}
+          />
+        ) : (
+          <FooterNav
+            user={user}
+            handleLogout={handleLogout}
+            notifications={notifications}
+            showNotification={showNotification}
+            handleNotificationClick={handleNotificationClick}
+          />
+        )}
+        <div className={`flex-grow p-8 ${isDesktopOrLaptop ? "ml-72" : ""}`}>
           <Routes>
             <Route path="/login" element={<Login setUser={setUser} />} />
             <Route path="/register" element={<Register setUser={setUser} />} />
