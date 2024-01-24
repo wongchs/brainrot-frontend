@@ -21,6 +21,7 @@ import { ModeToggle } from "./components/mode-toggle";
 import Register from "./components/Register";
 import userService from "./services/userService";
 import EditProfile from "./components/EditProfile";
+import { io } from "socket.io-client";
 
 function App() {
   const [posts, setPosts] = useState<PostInterface[]>([]);
@@ -51,6 +52,23 @@ function App() {
       postService.setToken(user.token);
       userService.setToken(user.token);
     }
+  }, [user]);
+
+  useEffect(() => {
+    const socket = io("http://localhost:3001/");
+    console.log(socket)
+    if (user) {
+      socket.emit("join", user.id);
+    }
+    socket.on("notification", (notification) => {
+      console.log(notification);
+    });
+    return () => {
+      if (user) {
+        socket.emit("leave", user.id);
+      }
+      socket.off("notification");
+    };
   }, [user]);
 
   const handleLogout = async () => {

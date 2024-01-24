@@ -1,4 +1,4 @@
-import { Home, Search, User, LogOut } from "lucide-react";
+import { Home, Search, User, LogOut, Bell } from "lucide-react";
 import { ModeToggle } from "./mode-toggle";
 import { Input } from "./ui/input";
 import { Link } from "react-router-dom";
@@ -49,9 +49,16 @@ const Sidebar = ({ user, handleLogout }: props) => {
                 <span>Profile</span>
               </Link>
             </li>
+
             <li className="rounded-sm">
               <div className="flex items-center py-2 space-x-3 rounded-md">
                 <ModeToggle />
+              </div>
+            </li>
+            <li className="rounded-sm">
+              <div className="flex items-center p-2 space-x-3 rounded-md">
+                <Bell />
+                <span>Notifications</span>
               </div>
             </li>
           </ul>
