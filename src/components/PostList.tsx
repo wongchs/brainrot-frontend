@@ -1,3 +1,4 @@
+import { Heart } from "lucide-react";
 import { Link } from "react-router-dom";
 import { LikePostFormValue, PostInterface, UserInterface } from "types";
 
@@ -24,13 +25,19 @@ const PostList: React.FC<PostListProps> = ({ posts, likePost, user }) => {
       {posts.map((post) => (
         <Link
           to={`/${post.user.username}/post/${post.id}`}
-          className="block p-4 rounded shadow dark:bg-gray-800"
+          className="block p-4 rounded shadow bg-slate-50 dark:bg-gray-800"
         >
           <div key={post.id} className="space-y-2">
             <h2 className="font-bold">{post.user.name}</h2>
             <p className="text-sm">@{post.user.username}</p>
             <p>{post.content}</p>
-            <button onClick={() => handleLike(post.id)}>Like Post</button>
+            <button onClick={() => handleLike(post.id)}>
+              {post.likes && post.likedBy && post.likedBy.includes(user.id) ? (
+                <Heart color="red" />
+              ) : (
+                <Heart />
+              )}
+            </button>
           </div>
         </Link>
       ))}

@@ -28,7 +28,7 @@ const PostForm = ({ createPost, user }: Props) => {
   };
 
   return (
-    <div className="rounded-md dark:bg-gray-800 px-4">
+    <div className="rounded-md bg-slate-50 dark:bg-gray-800 px-4">
       <form
         className="flex items-center gap-4 justify-between py-6"
         onSubmit={addPost}
