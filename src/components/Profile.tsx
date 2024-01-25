@@ -54,7 +54,7 @@ const Profile = ({ currentUser, likePost }: props) => {
   console.log(userWithPosts.posts);
 
   return (
-    <div className="p-4 shadow-md rounded-md">
+    <div className="p-4 shadow-md rounded-md bg-slate-200 dark:bg-slate-700">
       <h2 className="text-2xl font-bold mb-2">{userWithPosts.name}</h2>
       <p className="mt-2">Username: {userWithPosts.username}</p>
       {currentUser.id === id && (

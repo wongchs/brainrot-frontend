@@ -25,6 +25,17 @@ import {
   DropdownMenuItem,
   DropdownMenuTrigger,
 } from "./ui/dropdown-menu";
+import {
+  Dialog,
+  DialogClose,
+  DialogContent,
+  DialogDescription,
+  DialogFooter,
+  DialogHeader,
+  DialogTitle,
+  DialogTrigger,
+} from "./ui/dialog";
+import { MoreHorizontal } from "lucide-react";
 
 interface Props {
   post:
@@ -108,38 +119,54 @@ const Post = ({
   return (
     <>
       <div className="flex flex-col gap-4">
-        <div className="block p-4 shadow rounded-lg bg-slate-50 dark:bg-gray-800">
+        <div className="block p-4 shadow rounded-lg space-y-4 bg-slate-50 dark:bg-gray-800">
           <div className="flex justify-between">
             <Link to={`/profile/${post.user.id}/${post.user.username}`}>
               <p>{post.user.name}</p>
               <p>@{post.user.username}</p>
             </Link>
-          {post.user.id === user.id && (
-            <>
-              <input
-                type="text"
-                value={newContent}
-                onChange={(e) => setNewContent(e.target.value)}
-              />
-              <DropdownMenu>
-                <DropdownMenuTrigger>Options</DropdownMenuTrigger>
-                <DropdownMenuContent>
-                  <DropdownMenuItem onSelect={handleUpdate}>
-                    Update Post
-                  </DropdownMenuItem>
-                  <DropdownMenuItem
-                    onSelect={() => setIsDeleteDialogOpen(true)}
-                  >
-                    Delete Post
-                  </DropdownMenuItem>
-                </DropdownMenuContent>
-              </DropdownMenu>
-            </>
-          )}
+            {post.user.id === user.id && (
+              <Dialog>
+                <DropdownMenu>
+                  <DropdownMenuTrigger>
+                    <MoreHorizontal />
+                  </DropdownMenuTrigger>
+                  <DropdownMenuContent>
+                    <DialogTrigger asChild>
+                      <DropdownMenuItem>
+                        <span>Update Post</span>
+                      </DropdownMenuItem>
+                    </DialogTrigger>
+                    <DropdownMenuItem
+                      onSelect={() => setIsDeleteDialogOpen(true)}
+                    >
+                      Delete Post
+                    </DropdownMenuItem>
+                  </DropdownMenuContent>
+                </DropdownMenu>
+                <DialogContent className="bg-slate-50 dark:bg-gray-800">
+                  <DialogHeader>
+                    <DialogTitle>Edit Poast</DialogTitle>
+                  </DialogHeader>
+                  <DialogDescription>
+                    <Input
+                      type="text"
+                      value={newContent}
+                      onChange={(e) => setNewContent(e.target.value)}
+                    />
+                  </DialogDescription>
+                  <DialogFooter>
+                    <Button onClick={handleUpdate}>Update</Button>
+                  </DialogFooter>
+                </DialogContent>
+              </Dialog>
+            )}
           </div>
           <h2>{post.content}</h2>
-          <p>likes: {post.likes}</p>
-          <button onClick={handleLike}>Like Post</button>
+          <div>
+            <p>likes: {post.likes}</p>
+            <button onClick={handleLike}>Like Post</button>
+          </div>
         </div>
         <div className="flex flex-row gap-4">
           <Input
@@ -200,10 +227,10 @@ const Post = ({
         >
           <AlertDialogContent>
             <AlertDialogHeader>
-              <AlertDialogTitle>Update Post</AlertDialogTitle>
+              <AlertDialogTitle>Edit Post</AlertDialogTitle>
             </AlertDialogHeader>
             <AlertDialogDescription>
-              Post successfully updated.
+              Post edited successfully.
             </AlertDialogDescription>
             <AlertDialogFooter>
               <AlertDialogAction onClick={() => setIsUpdateDialogOpen(false)}>
