@@ -1,30 +1,28 @@
-# React + TypeScript + Vite
+# Social Media App
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+## Description
+This is a social media application that allows users to create posts, like posts, comment on posts, and receive notifications. It also includes user authentication and profile editing features. Users can also follow or unfollow each other. 
 
-Currently, two official plugins are available:
+## Technologies Used
+- React.js
+- React Router Dom
+- Socket.IO
+- Tailwind CSS
+- TypeScript
+- shadcn/ui
+- axios
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+## Use Cases
+- **User Authentication**: Users can register and log in to the application.
+- **Post Creation**: Users can create new posts.
+- **Post Interaction**: Users can like and comment on posts.
+- **Real-time Notifications**: Users receive real-time notifications for interactions on their posts.
+- **Profile Editing**: Users can edit their profile information.
+- **User Interaction**: Users can follow or unfollow each other.
 
-## Expanding the ESLint configuration
+## Installation
+To install and run this project locally, follow these steps:
 
-If you are developing a production application, we recommend updating the configuration to enable type aware lint rules:
-
-- Configure the top-level `parserOptions` property like this:
-
-```js
-export default {
-  // other rules...
-  parserOptions: {
-    ecmaVersion: 'latest',
-    sourceType: 'module',
-    project: ['./tsconfig.json', './tsconfig.node.json'],
-    tsconfigRootDir: __dirname,
-  },
-}
-```
-
-- Replace `plugin:@typescript-eslint/recommended` to `plugin:@typescript-eslint/recommended-type-checked` or `plugin:@typescript-eslint/strict-type-checked`
-- Optionally add `plugin:@typescript-eslint/stylistic-type-checked`
-- Install [eslint-plugin-react](https://github.com/jsx-eslint/eslint-plugin-react) and add `plugin:react/recommended` & `plugin:react/jsx-runtime` to the `extends` list
+1. Clone the repository to your local machine.
+2. Install the necessary dependencies by running `npm install`.
+3. Start the application by running `npm run dev`.
