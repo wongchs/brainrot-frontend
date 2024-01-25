@@ -1,5 +1,7 @@
 import { SetStateAction, useState } from "react";
 import { PostFormValue, UserInterface } from "../../types";
+import { Button } from "./ui/button";
+import { Input } from "./ui/input";
 
 interface Props {
   createPost: (post: PostFormValue) => void;
@@ -26,21 +28,26 @@ const PostForm = ({ createPost, user }: Props) => {
   };
 
   return (
-    <div>
-      <h3>What's on your mind?</h3>
-      <form onSubmit={addPost}>
-        <p>
-          title:{" "}
-          <input
-            id="content"
-            value={content}
-            onChange={handleContentChange}
-            placeholder="Let your mind free"
-          />
-        </p>
-        <button id="submit" type="submit">
-          create
-        </button>
+    <div className="rounded-md dark:bg-gray-800 px-4">
+      <form
+        className="flex items-center gap-4 justify-between py-6"
+        onSubmit={addPost}
+      >
+        <Input
+          className="border-none dark:bg-slate-900"
+          id="content"
+          value={content}
+          onChange={handleContentChange}
+          placeholder="Start poasting"
+        />
+        <Button
+          variant="outline"
+          className="rounded-full dark:bg-slate-900"
+          id="submit"
+          type="submit"
+        >
+          Poast
+        </Button>
       </form>
     </div>
   );

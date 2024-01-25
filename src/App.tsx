@@ -25,6 +25,7 @@ import EditProfile from "./components/EditProfile";
 import { io } from "socket.io-client";
 import { useMediaQuery } from "react-responsive";
 import FooterNav from "./components/FooterNav";
+import { Separator } from "./components/ui/separator";
 
 function App() {
   const [posts, setPosts] = useState<PostInterface[]>([]);
@@ -234,7 +235,7 @@ function App() {
             handleNotificationClick={handleNotificationClick}
           />
         )}
-        <div className={`flex-grow p-8 ${isDesktopOrLaptop ? "ml-72" : ""}`}>
+        <div className={`flex-grow p-8 ${isDesktopOrLaptop ? "mx-72" : ""}`}>
           <Routes>
             <Route path="/login" element={<Login setUser={setUser} />} />
             <Route path="/register" element={<Register setUser={setUser} />} />
@@ -243,7 +244,8 @@ function App() {
               element={
                 <div>
                   <PostForm createPost={addPost} user={user} />
-                  <ul>
+                  <Separator />
+                  <ul className="py-6">
                     {posts.map((post) => (
                       <li key={post.id}>
                         <Link to={`/${post.user.username}/post/${post.id}`}>
