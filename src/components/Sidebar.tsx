@@ -48,7 +48,7 @@ const Sidebar = ({
                 className="flex items-center p-2 space-x-3 rounded-md"
               >
                 <Home />
-                <span>Home</span>
+                <span className="font-bold">Home</span>
               </Link>
             </li>
             <li className="rounded-sm hover:bg-gray-200 dark:hover:bg-slate-600">
@@ -57,7 +57,7 @@ const Sidebar = ({
                 className="flex items-center p-2 space-x-3 rounded-md"
               >
                 <User />
-                <span>Profile</span>
+                <span className="font-bold">Profile</span>
               </Link>
             </li>
             <li className="rounded-sm hover:bg-gray-200 dark:hover:bg-slate-600">
@@ -72,7 +72,7 @@ const Sidebar = ({
                       <span className="absolute top-0 right-0 w-2 h-2 bg-red-500 rounded-full"></span>
                     )}
                   </div>
-                  <span>Notifications</span>
+                  <span className="font-bold">Notifications</span>
                 </PopoverTrigger>
                 <PopoverContent>
                   {notifications.length > 0 ? (
@@ -104,7 +104,7 @@ const Sidebar = ({
                   className="flex items-center p-2 space-x-3 rounded-md"
                 >
                   <LogOut />
-                  <span>Logout</span>
+                  <span className="font-bold">Logout</span>
                 </button>
               </li>
             )}

@@ -265,7 +265,7 @@ function App() {
             />
             <Route
               path="/profile/:id/:username"
-              element={<Profile currentUser={user} />}
+              element={<Profile currentUser={user} likePost={likePost} />}
             />
 
             <Route

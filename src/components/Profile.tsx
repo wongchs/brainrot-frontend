@@ -1,14 +1,19 @@
 import userService from "@/services/userService";
 import { useEffect, useState } from "react";
 import { Link, useParams } from "react-router-dom";
-import { UserInterface } from "types";
+import { LikePostFormValue, PostInterface, UserInterface } from "types";
 import { Skeleton } from "./ui/skeleton";
+import { Heart } from "lucide-react";
 
 interface props {
   currentUser: UserInterface;
+  likePost: (
+    id: PostInterface["id"],
+    newObject: LikePostFormValue
+  ) => Promise<void>;
 }
 
-const Profile = ({ currentUser }: props) => {
+const Profile = ({ currentUser, likePost }: props) => {
   const [userWithPosts, setUserWithPosts] = useState<UserInterface | null>(
     null
   );
@@ -38,6 +43,16 @@ const Profile = ({ currentUser }: props) => {
     }
   };
 
+  const handleLike = async (id: string) => {
+    const likedPost = {
+      id: id,
+      user: currentUser,
+    };
+    await likePost(id, likedPost);
+  };
+
+  console.log(userWithPosts.posts);
+
   return (
     <div className="p-4 shadow-md rounded-md">
       <h2 className="text-2xl font-bold mb-2">{userWithPosts.name}</h2>
@@ -57,16 +72,28 @@ const Profile = ({ currentUser }: props) => {
         </div>
       )}
       <h3 className="text-xl font-semibold mt-4">Posts:</h3>
-      <ul className="list-disc ml-5">
+      <div className="mt-4 space-y-4">
         {userWithPosts.posts &&
           userWithPosts.posts.map((post) => (
-            <li key={post.id} className="mt-2">
-              <Link to={`/${userWithPosts.username}/post/${post.id}`}>
-                {post.content}
-              </Link>
-            </li>
+            <Link
+              to={`/${userWithPosts.username}/post/${post.id}`}
+              className="block p-4 rounded shadow bg-slate-50 dark:bg-gray-800 hover:bg-gray-100"
+            >
+              <div key={post.id} className="space-y-2">
+                <p>{post.content}</p>
+                <button onClick={() => handleLike(post.id)}>
+                  {post.likes &&
+                  post.likedBy &&
+                  post.likedBy.includes(user.id) ? (
+                    <Heart color="red" />
+                  ) : (
+                    <Heart />
+                  )}
+                </button>
+              </div>
+            </Link>
           ))}
-      </ul>
+      </div>
     </div>
   );
 };
