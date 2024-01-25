@@ -34,7 +34,7 @@ const PostForm = ({ createPost, user }: Props) => {
         onSubmit={addPost}
       >
         <Input
-          className="border-none dark:bg-slate-900"
+          className="border-none dark:bg-slate-900 text-xl"
           id="content"
           value={content}
           onChange={handleContentChange}
@@ -42,7 +42,7 @@ const PostForm = ({ createPost, user }: Props) => {
         />
         <Button
           variant="outline"
-          className="rounded-full dark:bg-slate-900"
+          className="rounded-full dark:bg-slate-900 text-md"
           id="submit"
           type="submit"
         >
