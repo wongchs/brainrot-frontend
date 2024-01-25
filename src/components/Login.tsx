@@ -50,7 +50,7 @@ const Login = ({ setUser }: props) => {
   };
 
   return (
-    <Card className="w-[350px] dark:bg-gray-800">
+    <Card className="w-[350px] bg-slate-50 dark:bg-gray-800">
       <CardHeader>
         <CardTitle>Login</CardTitle>
         <CardDescription>
