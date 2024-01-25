@@ -15,6 +15,7 @@ export interface PostInterface {
   user: UserInterface;
   likes?: number;
   comments?: CommentInterface[];
+  likedBy?: UserInterface[]
 }
 
 export interface CommentInterface {
