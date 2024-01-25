@@ -82,6 +82,8 @@ function App() {
     };
   }, [user]);
 
+  console.log(user)
+
   const handleNewNotification = (notification: Notification) => {
     setNotifications([...notifications, notification]);
     setShowNotification(true);
