@@ -26,6 +26,7 @@ import { io } from "socket.io-client";
 import { useMediaQuery } from "react-responsive";
 import FooterNav from "./components/FooterNav";
 import { Separator } from "./components/ui/separator";
+import PostList from "./components/PostList";
 
 function App() {
   const [posts, setPosts] = useState<PostInterface[]>([]);
@@ -245,15 +246,7 @@ function App() {
                 <div>
                   <PostForm createPost={addPost} user={user} />
                   <Separator />
-                  <ul className="py-6">
-                    {posts.map((post) => (
-                      <li key={post.id}>
-                        <Link to={`/${post.user.username}/post/${post.id}`}>
-                          {post.content}
-                        </Link>
-                      </li>
-                    ))}
-                  </ul>
+                  <PostList posts={posts} />
                 </div>
               }
             />
