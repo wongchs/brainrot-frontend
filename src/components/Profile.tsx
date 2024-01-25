@@ -80,6 +80,8 @@ const Profile = ({ currentUser, likePost }: props) => {
               className="block p-4 rounded shadow bg-slate-50 dark:bg-gray-800 hover:bg-gray-100"
             >
               <div key={post.id} className="space-y-2">
+                <h2 className="font-bold">{userWithPosts.name}</h2>
+                <p className="text-sm">@{userWithPosts.username}</p>
                 <p>{post.content}</p>
                 <button onClick={() => handleLike(post.id)}>
                   {post.likes &&
