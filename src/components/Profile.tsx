@@ -3,7 +3,6 @@ import { useEffect, useState } from "react";
 import { Link, useParams } from "react-router-dom";
 import { LikePostFormValue, PostInterface, UserInterface } from "types";
 import { Skeleton } from "./ui/skeleton";
-import { Heart } from "lucide-react";
 
 interface props {
   currentUser: UserInterface;
@@ -83,15 +82,7 @@ const Profile = ({ currentUser, likePost }: props) => {
                 <h2 className="font-bold">{userWithPosts.name}</h2>
                 <p className="text-sm">@{userWithPosts.username}</p>
                 <p>{post.content}</p>
-                <button onClick={() => handleLike(post.id)}>
-                  {post.likes &&
-                  post.likedBy &&
-                  post.likedBy.includes(user.id) ? (
-                    <Heart color="red" />
-                  ) : (
-                    <Heart />
-                  )}
-                </button>
+                <button onClick={() => handleLike}>Like Post</button>
               </div>
             </Link>
           ))}
