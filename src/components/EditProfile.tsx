@@ -38,7 +38,7 @@ const EditProfile = ({ user, updateUser }: props) => {
   console.log(user);
 
   return (
-    <Tabs defaultValue="account" className="w-[400px]">
+    <Tabs defaultValue="account" className="w-[400px] m-auto">
       <TabsList className="grid w-full grid-cols-2">
         <TabsTrigger value="account">Account</TabsTrigger>
         <TabsTrigger value="password">Password</TabsTrigger>

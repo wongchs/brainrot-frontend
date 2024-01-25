@@ -105,11 +105,6 @@ const Post = ({
         <p>by {post.user.username}</p>
       </Link>
       <p>likes: {post.likes}</p>
-      <input
-        type="text"
-        value={newContent}
-        onChange={(e) => setNewContent(e.target.value)}
-      />
       {post.user.id === user.id && (
         <>
           <input
