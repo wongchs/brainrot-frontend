@@ -65,7 +65,7 @@ function App() {
   }, [user]);
 
   useEffect(() => {
-    const socket = io("http://localhost:3001/");
+    const socket = io("https://brainrot-backend.onrender.com/");
     console.log(socket);
     if (user) {
       socket.emit("join", user.id);
