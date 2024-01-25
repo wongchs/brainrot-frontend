@@ -11,7 +11,7 @@ import {
 } from "../types";
 import axios from "axios";
 import PostForm from "./components/PostForm";
-import { Link, Route, Routes, useMatch, useNavigate } from "react-router-dom";
+import { Route, Routes, useMatch, useNavigate } from "react-router-dom";
 import Post from "./components/Post";
 import "./index.css";
 import { ThemeProvider } from "./components/theme-provider";
