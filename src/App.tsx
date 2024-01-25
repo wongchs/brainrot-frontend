@@ -246,7 +246,7 @@ function App() {
                 <div>
                   <PostForm createPost={addPost} user={user} />
                   <Separator />
-                  <PostList posts={posts} />
+                  <PostList posts={posts} user={user} likePost={likePost} />
                 </div>
               }
             />
