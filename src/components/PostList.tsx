@@ -1,3 +1,4 @@
+import { Heart } from "lucide-react";
 import { Link } from "react-router-dom";
 import { LikePostFormValue, PostInterface, UserInterface } from "types";
 
@@ -11,12 +12,21 @@ interface PostListProps {
 }
 
 const PostList: React.FC<PostListProps> = ({ posts, likePost, user }) => {
-  const handleLike = async (id: string) => {
+  const handleLike = async (post: PostInterface) => {
     const likedPost = {
-      id: id,
+      id: post.id,
       user: user,
     };
-    await likePost(id, likedPost);
+    if (
+      post.likedBy?.some((userId) => userId.toString() === user.id.toString())
+    ) {
+      post.likedBy = post.likedBy.filter(
+        (userId) => userId.toString() !== user.id.toString()
+      );
+    } else {
+      post.likedBy = [...(post.likedBy || []), user];
+    }
+    await likePost(post.id, likedPost);
   };
 
   return (
@@ -30,7 +40,18 @@ const PostList: React.FC<PostListProps> = ({ posts, likePost, user }) => {
             <h2 className="font-bold">{post.user.name}</h2>
             <p className="text-sm">@{post.user.username}</p>
             <p>{post.content}</p>
-            <button onClick={() => handleLike}>Like Post</button>
+            <button
+              onClick={() => handleLike(post)}
+              style={{
+                color: post.likedBy?.some(
+                  (userId) => userId.toString() === user.id.toString()
+                )
+                  ? "red"
+                  : "black",
+              }}
+            >
+              <Heart />
+            </button>
           </div>
         </Link>
       ))}

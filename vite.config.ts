@@ -14,7 +14,7 @@ export default defineConfig({
   server: {
     proxy: {
       "/api": {
-        target: "https://brainrot-backend.onrender.com",
+        target: "http://localhost:3001/",
         changeOrigin: true,
       },
     },

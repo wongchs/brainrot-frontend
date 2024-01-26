@@ -34,7 +34,7 @@ import {
   DialogTitle,
   DialogTrigger,
 } from "./ui/dialog";
-import { MoreHorizontal } from "lucide-react";
+import { Heart, MoreHorizontal } from "lucide-react";
 
 interface Props {
   post:
@@ -44,6 +44,7 @@ interface Props {
         id: string;
         likes?: number;
         comments?: CommentInterface[];
+        likedBy?: UserInterface[];
       }
     | null
     | undefined;
@@ -98,6 +99,15 @@ const Post = ({
       id: post.id,
       user: user,
     };
+    if (
+      post.likedBy?.some((userId) => userId.toString() === user.id.toString())
+    ) {
+      post.likedBy = post.likedBy.filter(
+        (userId) => userId.toString() !== user.id.toString()
+      );
+    } else {
+      post.likedBy = [...(post.likedBy || []), user];
+    }
     await likePost(post.id, likedPost);
   };
 
@@ -164,7 +174,18 @@ const Post = ({
           <h2>{post.content}</h2>
           <div>
             <p>likes: {post.likes}</p>
-            <button onClick={handleLike}>Like Post</button>
+            <button
+              onClick={handleLike}
+              style={{
+                color: post.likedBy?.some(
+                  (userId) => userId.toString() === user.id.toString()
+                )
+                  ? "red"
+                  : "black",
+              }}
+            >
+              <Heart />
+            </button>
           </div>
         </div>
         <div className="flex flex-row gap-4">

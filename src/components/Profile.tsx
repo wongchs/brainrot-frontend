@@ -3,6 +3,7 @@ import { useEffect, useState } from "react";
 import { Link, useParams } from "react-router-dom";
 import { LikePostFormValue, PostInterface, UserInterface } from "types";
 import { Skeleton } from "./ui/skeleton";
+import { Heart } from "lucide-react";
 
 interface props {
   currentUser: UserInterface;
@@ -42,12 +43,23 @@ const Profile = ({ currentUser, likePost }: props) => {
     }
   };
 
-  const handleLike = async (id: string) => {
+  const handleLike = async (post: PostInterface) => {
     const likedPost = {
-      id: id,
+      id: post.id,
       user: currentUser,
     };
-    await likePost(id, likedPost);
+    if (
+      post.likedBy?.some(
+        (userId) => userId.toString() === currentUser.id.toString()
+      )
+    ) {
+      post.likedBy = post.likedBy.filter(
+        (userId) => userId.toString() !== currentUser.id.toString()
+      );
+    } else {
+      post.likedBy = [...(post.likedBy || []), currentUser];
+    }
+    await likePost(post.id, likedPost);
   };
 
   console.log(userWithPosts.posts);
@@ -82,7 +94,19 @@ const Profile = ({ currentUser, likePost }: props) => {
                 <h2 className="font-bold">{userWithPosts.name}</h2>
                 <p className="text-sm">@{userWithPosts.username}</p>
                 <p>{post.content}</p>
-                <button onClick={() => handleLike}>Like Post</button>
+                <button
+                  onClick={() => handleLike(post)}
+                  style={{
+                    color: post.likedBy?.some(
+                      (userId) =>
+                        userId.toString() === currentUser.id.toString()
+                    )
+                      ? "red"
+                      : "black",
+                  }}
+                >
+                  <Heart />
+                </button>
               </div>
             </Link>
           ))}
