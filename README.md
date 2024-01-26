@@ -26,3 +26,9 @@ To install and run this project locally, follow these steps:
 1. Clone the repository to your local machine.
 2. Install the necessary dependencies by running `npm install`.
 3. Start the application by running `npm run dev`.
+
+## Backend
+https://github.com/wongchs/brainrot-backend
+
+## Deployment
+https://brainrot-backend.onrender.com/
