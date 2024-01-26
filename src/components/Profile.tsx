@@ -4,6 +4,7 @@ import { Link, useParams } from "react-router-dom";
 import { LikePostFormValue, PostInterface, UserInterface } from "types";
 import { Skeleton } from "./ui/skeleton";
 import { Heart } from "lucide-react";
+import { Button } from "./ui/button";
 
 interface props {
   currentUser: UserInterface;
@@ -33,12 +34,22 @@ const Profile = ({ currentUser, likePost }: props) => {
 
   const handleFollow = async () => {
     if (userWithPosts) {
+      setUserWithPosts({
+        ...userWithPosts,
+        followers: [...userWithPosts.followers, currentUser.id],
+      });
       await userService.follow(userWithPosts.id);
     }
   };
 
   const handleUnfollow = async () => {
     if (userWithPosts) {
+      setUserWithPosts({
+        ...userWithPosts,
+        followers: userWithPosts.followers.filter(
+          (userId) => userId !== currentUser.id
+        ),
+      });
       await userService.unfollow(userWithPosts.id);
     }
   };
@@ -62,6 +73,8 @@ const Profile = ({ currentUser, likePost }: props) => {
     await likePost(post.id, likedPost);
   };
 
+  const isFollowing = userWithPosts.followers.includes(currentUser.id);
+
   console.log(userWithPosts.posts);
 
   return (
@@ -78,8 +91,16 @@ const Profile = ({ currentUser, likePost }: props) => {
       )}
       {currentUser.id !== id && (
         <div>
-          <button onClick={handleFollow}>Follow</button>
-          <button onClick={handleUnfollow}>Unfollow</button>
+          {!isFollowing && (
+            <Button variant={"outline"} onClick={handleFollow}>
+              Follow
+            </Button>
+          )}
+          {isFollowing && (
+            <Button variant={"outline"} onClick={handleUnfollow}>
+              Unfollow
+            </Button>
+          )}
         </div>
       )}
       <h3 className="text-xl font-semibold mt-4">Posts:</h3>
